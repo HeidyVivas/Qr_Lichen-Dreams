@@ -25,48 +25,86 @@ const VERSIONS = [
   // },
 ];
 
-function render() {
-  const [latest, ...older] = VERSIONS;
-  const currentBlock = document.getElementById('current-block');
-  const historyList = document.getElementById('history-list');
+const DOWNLOAD_ICON = `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v12m0 0 5-5m-5 5-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 19h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
 
-  if (!latest) {
-    currentBlock.innerHTML = '<p class="empty-note">Todavía no hay versiones publicadas.</p>';
-    return;
-  }
-
-  currentBlock.innerHTML = `
-    <div class="current-eyebrow">Última versión</div>
-    <p class="current-version">v${latest.version}</p>
-    <p class="current-date">${formatDate(latest.date)}</p>
-    <ul class="changelog">
-      ${latest.changelog.map(item => `<li>${item}</li>`).join('')}
-    </ul>
-    <a class="btn-download" href="${latest.url}">⬇ Descargar APK</a>
-    <div class="meta-row">
-      ${latest.size ? `<span>${latest.size}</span><span>·</span>` : ''}
-      <span>Android</span>
-    </div>
-  `;
-
-  if (older.length === 0) {
-    historyList.innerHTML = '<p class="empty-note">Esta es la primera versión publicada de Lichen Dreams.</p>';
-  } else {
-    historyList.innerHTML = older.map(v => `
-      <div class="version-row">
-        <div class="version-info">
-          <div class="v-name">v${v.version}</div>
-          <div class="v-date">${formatDate(v.date)}</div>
-        </div>
-        <a class="link-download" href="${v.url}">Descargar</a>
-      </div>
-    `).join('');
-  }
-}
+const CHEVRON_ICON = `<svg class="chevron" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
 function formatDate(iso) {
   const d = new Date(iso + 'T00:00:00');
   return d.toLocaleDateString('es-CO', { day: 'numeric', month: 'long', year: 'numeric' });
 }
 
-render();
+function renderCurrent() {
+  const [latest] = VERSIONS;
+  const block = document.getElementById('current-block');
+
+  if (!latest) {
+    block.innerHTML = '<p class="empty-note">Todavía no hay versiones publicadas.</p>';
+    return;
+  }
+
+  block.innerHTML = `
+    <div class="version-badge"><span class="dot"></span>Última versión</div>
+    <p class="v-title">Lichen Dreams v${latest.version}</p>
+    <p class="v-date">${formatDate(latest.date)}</p>
+    <ul class="changelog">
+      ${latest.changelog.map(item => `<li>${item}</li>`).join('')}
+    </ul>
+    <a class="btn-download" href="${latest.url}">
+      ${DOWNLOAD_ICON}
+      Descargar APK
+    </a>
+    <div class="meta-row">
+      ${latest.size ? `<span>${latest.size}</span><span>·</span>` : ''}
+      <span>Android</span>
+    </div>
+  `;
+}
+
+function renderHistory() {
+  const [, ...older] = VERSIONS;
+  const list = document.getElementById('history-list');
+
+  if (older.length === 0) {
+    list.innerHTML = '<p class="empty-note">Esta es la primera versión publicada de Lichen Dreams.</p>';
+    return;
+  }
+
+  list.innerHTML = older.map(v => `
+    <details class="version-item">
+      <summary>
+        <div>
+          <div class="v-name">v${v.version}</div>
+          <div class="v-date-small">${formatDate(v.date)}</div>
+        </div>
+        ${CHEVRON_ICON}
+      </summary>
+      <div class="item-body">
+        <ul>${v.changelog.map(item => `<li>${item}</li>`).join('')}</ul>
+        <a class="link-download" href="${v.url}">Descargar esta versión</a>
+      </div>
+    </details>
+  `).join('');
+}
+
+// Animación de aparición al hacer scroll (Intersection Observer)
+function initScrollReveal() {
+  const items = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    items.forEach(el => el.classList.add('in-view'));
+    return;
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  items.forEach(el => observer.observe(el));
+}
+
+renderCurrent();
+renderHistory();
+initScrollReveal();
