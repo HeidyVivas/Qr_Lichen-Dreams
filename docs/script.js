@@ -44,6 +44,7 @@ function renderCurrent() {
   }
 
   block.innerHTML = `
+    <img class="download-logo" src="./icon.png" alt="">
     <div class="version-badge"><span class="dot"></span>Última versión</div>
     <p class="v-title">Lichen Dreams v${latest.version}</p>
     <p class="v-date">${formatDate(latest.date)}</p>

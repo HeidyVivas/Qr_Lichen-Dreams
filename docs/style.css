@@ -159,6 +159,7 @@ h1 {
 main { padding-bottom: 40px; }
 
 .download-card {
+  position: relative;
   background: var(--bg-card);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
@@ -167,6 +168,17 @@ main { padding-bottom: 40px; }
   padding: clamp(26px, 6vw, 38px);
   box-shadow: var(--shadow);
   margin-bottom: clamp(48px, 9vw, 72px);
+}
+
+.download-logo {
+  position: absolute;
+  top: 28px;
+  right: 30px;
+  width: clamp(82px, 15vw, 128px);
+  height: auto;
+  border-radius: 22%;
+  opacity: 0.95;
+  pointer-events: none;
 }
 
 .version-badge {
@@ -406,6 +418,14 @@ footer a:hover { text-decoration: underline; }
 /* ---------------- responsive ---------------- */
 @media (max-width: 480px) {
   .nav-link { display: none; }
-  .download-card { border-radius: 20px; }
+  .download-card {
+    border-radius: 20px;
+    padding-top: 142px;
+  }
+  .download-logo {
+    top: 24px;
+    right: 24px;
+    width: 92px;
+  }
   .version-item summary { padding: 14px 16px; }
 }
