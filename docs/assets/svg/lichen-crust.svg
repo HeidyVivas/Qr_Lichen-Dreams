@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <g opacity="0.5">
+    <path d="M20 280 Q40 260 70 270 Q100 280 130 265 Q160 250 190 270 Q220 290 250 270 Q280 250 310 270 Q340 290 370 270 Q390 250 380 230" stroke="#7D896D" stroke-width="1.2" stroke-linecap="round"/>
+    <path d="M30 250 Q50 235 80 240 Q110 245 140 230 Q170 215 200 235 Q230 255 260 235 Q290 215 320 235 Q350 255 380 240" stroke="#7D896D" stroke-width="0.8" stroke-linecap="round" opacity="0.6"/>
+    <path d="M40 220 Q60 210 90 215 Q120 220 150 205 Q180 190 210 210 Q240 230 270 210 Q300 190 330 210 Q360 230 390 215" stroke="#7D896D" stroke-width="0.6" stroke-linecap="round" opacity="0.4"/>
+    <path d="M50 190 Q70 185 100 188 Q130 192 160 175 Q190 160 220 180 Q250 200 280 180 Q310 160 340 180 Q370 200 395 185" stroke="#7D896D" stroke-width="0.5" stroke-linecap="round" opacity="0.3"/>
+    <circle cx="80" cy="240" r="5" fill="#7D896D" opacity="0.5"/>
+    <circle cx="200" cy="235" r="6" fill="#7D896D" opacity="0.45"/>
+    <circle cx="320" cy="235" r="5" fill="#7D896D" opacity="0.5"/>
+    <circle cx="140" cy="205" r="4" fill="#7D896D" opacity="0.35"/>
+    <circle cx="270" cy="210" r="4.5" fill="#7D896D" opacity="0.4"/>
+    <circle cx="100" cy="188" r="3" fill="#7D896D" opacity="0.3"/>
+    <circle cx="220" cy="180" r="3.5" fill="#7D896D" opacity="0.35"/>
+    <circle cx="340" cy="180" r="3" fill="#7D896D" opacity="0.3"/>
+    <ellipse cx="150" cy="140" rx="60" ry="25" stroke="#7D896D" stroke-width="0.4" opacity="0.2"/>
+    <ellipse cx="250" cy="120" rx="40" ry="18" stroke="#7D896D" stroke-width="0.3" opacity="0.15"/>
+  </g>
+</svg>

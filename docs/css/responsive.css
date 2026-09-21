@@ -1,0 +1,115 @@
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE.CSS — Breakpoint-specific overrides.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Mobile narrow: 320px - 480px ── */
+@media (max-width: 480px) {
+  .hero-logo { width: 100px; height: 100px; }
+  .phone-frame { width: 220px; height: 460px; }
+  .phone-screen { padding-top: 40px; }
+  .download-card-main { padding: 22px; }
+  .download-card-header { margin-bottom: 20px; }
+  .download-meta-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .flow-number { font-size: 36px; }
+  .feature-card { padding: 20px; }
+  .section { padding-bottom: 56px; }
+  .container { padding: 0 18px; }
+  #hero { padding: 120px 18px 60px; }
+  .hero-grid { gap: 36px; }
+  .footer-lichen { width: 90px; left: -16px; opacity: 0.4; }
+  .version-hero { padding: 24px; }
+  .about-item { padding: 20px; }
+  .phone-mockup { max-width: 260px; }
+}
+
+/* ── Small mobile: 481px - 560px ── */
+@media (min-width: 481px) and (max-width: 560px) {
+  .hero-logo { width: 115px; height: 115px; }
+  .phone-frame { width: 240px; height: 500px; }
+  .container { padding: 0 20px; }
+  .phone-mockup { max-width: 280px; }
+}
+
+/* ── Mobile landscape / small tablet: 561px - 767px ── */
+@media (min-width: 561px) and (max-width: 767px) {
+  .hero-logo { width: 120px; height: 120px; }
+  #hero { padding: 130px 24px 70px; }
+  .container { padding: 0 24px; }
+  .phone-mockup { max-width: 300px; }
+}
+
+/* ── Tablet: 768px - 1023px ── */
+@media (min-width: 768px) {
+  .feature-grid { grid-template-columns: repeat(2, 1fr); }
+  .about-grid { grid-template-columns: repeat(2, 1fr); }
+  #hero { padding: 120px 32px 70px; }
+  .phone-frame { width: 250px; height: 520px; }
+  .download-grid { grid-template-columns: 1.5fr 1fr; }
+  .download-meta-grid { grid-template-columns: repeat(4, 1fr); }
+  .footer-grid { grid-template-columns: 1.5fr 1fr 1fr; }
+  .footer-bottom { flex-direction: row; justify-content: space-between; }
+}
+
+/* ── Tablet large / Desktop compact: 1024px ── */
+@media (min-width: 1024px) {
+  .hero-grid { flex-direction: row; justify-content: center; align-items: center; gap: 64px; text-align: left; }
+  .hero-sidebar { padding-top: 0; }
+  .feature-grid { grid-template-columns: repeat(3, 1fr); }
+  .feature-card.featured { grid-column: span 2; }
+  .container { padding: 0 32px; max-width: 1100px; }
+  .about-grid { grid-template-columns: repeat(3, 1fr); }
+  .about-item:nth-child(1) { grid-column: span 2; }
+  .about-item:nth-child(4) { grid-column: span 2; }
+  #hero { padding: 100px 40px 80px; }
+  .hero-logo { width: 130px; height: 130px; }
+  .phone-frame { width: 270px; height: 560px; }
+  .download-grid { grid-template-columns: 1.5fr 1fr; }
+}
+
+/* ── Desktop: 1280px ── */
+@media (min-width: 1280px) {
+  .container { max-width: 1100px; }
+  #hero { padding: 90px 48px 90px; }
+  .hero-grid { gap: 80px; }
+}
+
+/* ── Large desktop: 1440px ── */
+@media (min-width: 1440px) {
+  .container { max-width: 1180px; }
+  #hero { padding: 90px 64px 100px; }
+}
+
+/* ── Ultrawide: 1920px+ ── */
+@media (min-width: 1920px) {
+  .container { max-width: 1280px; }
+  #hero { padding-left: 80px; padding-right: 80px; }
+  .ambient-blob-a { width: 600px; height: 600px; opacity: 0.12; }
+  .ambient-blob-b { width: 500px; height: 500px; opacity: 0.1; }
+  .ambient-hero-glow { width: 480px; height: 480px; }
+}
+
+/* ── Phone float: desktop only ── */
+@media (min-width: 1024px) {
+  .phone-float { animation: phone-float 4s ease-in-out infinite; }
+}
+@media (max-width: 1023px) {
+  .phone-float { animation: none; }
+}
+
+/* ── Touch targets ── */
+@media (max-width: 767px) {
+  .nav-link { padding: 10px 14px; font-size: 14px; }
+  .btn-download { min-height: 56px; font-size: 16px; }
+  .btn-secondary { min-height: 48px; }
+  .feature-card { padding: 22px; }
+  .flow-step { padding: 24px 20px; }
+  .faq-item summary { padding: 18px 20px; font-size: 15px; }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .phone-float, .ambient-blob, .ambient-glow { animation: none !important; }
+  .hero-animate { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+  html { scroll-behavior: auto; }
+}

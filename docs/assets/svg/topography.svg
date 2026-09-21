@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" fill="none">
+  <g opacity="0.35">
+    <path d="M0 50 Q75 30 150 50 Q225 70 300 50 Q375 30 450 50 Q525 70 600 50" stroke="#7D896D" stroke-width="0.8"/>
+    <path d="M0 80 Q75 100 150 80 Q225 60 300 80 Q375 100 450 80 Q525 60 600 80" stroke="#7D896D" stroke-width="0.8"/>
+    <path d="M0 110 Q75 90 150 110 Q225 130 300 110 Q375 90 450 110 Q525 130 600 110" stroke="#7D896D" stroke-width="0.8"/>
+    <path d="M0 140 Q75 160 150 140 Q225 120 300 140 Q375 160 450 140 Q525 120 600 140" stroke="#7D896D" stroke-width="0.8"/>
+    <path d="M0 170 Q75 150 150 170 Q225 190 300 170 Q375 150 450 170 Q525 190 600 170" stroke="#7D896D" stroke-width="0.8"/>
+    <path d="M0 200 Q75 220 150 200 Q225 180 300 200 Q375 220 450 200 Q525 180 600 200" stroke="#7D896D" stroke-width="0.8"/>
+    <path d="M0 230 Q75 210 150 230 Q225 250 300 230 Q375 210 450 230 Q525 250 600 230" stroke="#7D896D" stroke-width="0.8"/>
+    <path d="M0 260 Q75 280 150 260 Q225 240 300 260 Q375 280 450 260 Q525 240 600 260" stroke="#7D896D" stroke-width="0.8"/>
+    <circle cx="300" cy="50" r="3" fill="#7D896D" opacity="0.5"/>
+    <circle cx="300" cy="140" r="3" fill="#7D896D" opacity="0.5"/>
+    <circle cx="300" cy="230" r="3" fill="#7D896D" opacity="0.5"/>
+  </g>
+</svg>

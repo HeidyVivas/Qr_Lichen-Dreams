@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <g opacity="0.5">
+    <path d="M30 250 Q50 230 80 245 Q110 260 140 240 Q170 220 200 245 Q230 270 260 235 Q290 200 320 230 Q350 260 380 235 Q395 210 370 180 Q345 150 310 160 Q275 170 240 150 Q205 130 170 145 Q135 160 100 145 Q65 130 35 150 Q10 170 30 200" stroke="#7D896D" stroke-width="1.2" stroke-linecap="round" opacity="0.4"/>
+    <ellipse cx="120" cy="190" rx="45" ry="25" stroke="#7D896D" stroke-width="1" opacity="0.5"/>
+    <ellipse cx="250" cy="160" rx="50" ry="30" stroke="#7D896D" stroke-width="1" opacity="0.5"/>
+    <ellipse cx="320" cy="210" rx="35" ry="22" stroke="#7D896D" stroke-width="1" opacity="0.5"/>
+    <ellipse cx="80" cy="140" rx="30" ry="20" stroke="#7D896D" stroke-width="0.8" opacity="0.4"/>
+    <ellipse cx="180" cy="110" rx="28" ry="18" stroke="#7D896D" stroke-width="0.8" opacity="0.4"/>
+    <ellipse cx="290" cy="120" rx="25" ry="16" stroke="#7D896D" stroke-width="0.8" opacity="0.4"/>
+    <ellipse cx="120" cy="190" rx="28" ry="16" stroke="#7D896D" stroke-width="0.7" opacity="0.35"/>
+    <ellipse cx="250" cy="160" rx="30" ry="18" stroke="#7D896D" stroke-width="0.7" opacity="0.35"/>
+    <ellipse cx="320" cy="210" rx="20" ry="13" stroke="#7D896D" stroke-width="0.7" opacity="0.35"/>
+    <ellipse cx="80" cy="140" rx="18" ry="12" stroke="#7D896D" stroke-width="0.6" opacity="0.3"/>
+    <ellipse cx="180" cy="110" rx="16" ry="10" stroke="#7D896D" stroke-width="0.6" opacity="0.3"/>
+    <ellipse cx="290" cy="120" rx="14" ry="9" stroke="#7D896D" stroke-width="0.6" opacity="0.3"/>
+    <circle cx="120" cy="190" r="5" fill="#7D896D" opacity="0.5"/>
+    <circle cx="250" cy="160" r="6" fill="#7D896D" opacity="0.5"/>
+    <circle cx="320" cy="210" r="4" fill="#7D896D" opacity="0.5"/>
+    <circle cx="80" cy="140" r="3" fill="#7D896D" opacity="0.4"/>
+    <circle cx="180" cy="110" r="3" fill="#7D896D" opacity="0.4"/>
+    <circle cx="290" cy="120" r="2.5" fill="#7D896D" opacity="0.4"/>
+    <circle cx="150" cy="165" r="3.5" fill="#7D896D" opacity="0.45"/>
+    <circle cx="210" cy="135" r="2.5" fill="#7D896D" opacity="0.4"/>
+    <circle cx="300" cy="170" r="2" fill="#7D896D" opacity="0.35"/>
+  </g>
+</svg>

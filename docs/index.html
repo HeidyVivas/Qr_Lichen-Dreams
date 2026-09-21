@@ -3,89 +3,290 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lichen Dreams — Descargas</title>
-<meta name="description" content="Descarga la app Lichen Dreams, actualízala o instala versiones anteriores.">
+<title>Lichen Dreams — Sitio oficial de descarga</title>
+<meta name="description" content="Analiza líquenes con IA y descubre la calidad del aire de tu entorno. Descarga Lichen Dreams para Android.">
+<meta name="theme-color" content="#0E120B">
+<meta property="og:title" content="Lichen Dreams — Sitio oficial de descarga">
+<meta property="og:description" content="Analiza líquenes con IA para evaluar la calidad del aire. Captura, analiza y visualiza observaciones ambientales en tu zona.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Lichen Dreams — Sitio oficial de descarga">
+<meta name="twitter:description" content="Analiza líquenes con IA para evaluar la calidad del aire. Captura, analiza y visualiza observaciones ambientales.">
+<link rel="icon" type="image/png" href="./assets/images/icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="icon" href="">
-<link rel="stylesheet" href="style.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        'ld-bg': '#0E120B', 'ld-deep': '#080B06', 'ld-elevated': '#151B12',
+        'ld-ink': '#F4F3EC', 'ld-ink-soft': '#C5CABD', 'ld-ink-muted': '#9AA192', 'ld-ink-faint': '#7A8272',
+        'ld-moss': '#7D896D', 'ld-moss-mid': '#96A37D', 'ld-moss-bright': '#AEB5A0', 'ld-moss-deep': '#4E5B4A',
+        'ld-accent': '#C4E094', 'ld-accent-soft': 'rgba(196,224,148,0.12)',
+        'ld-line': 'rgba(244,243,236,0.07)', 'ld-line-strong': 'rgba(244,243,236,0.12)',
+      },
+      fontFamily: { display: ['Fraunces', 'Georgia', 'serif'], sans: ['Public Sans', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'] }
+    }
+  }
+}
+</script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="./css/custom.css">
+<link rel="stylesheet" href="./css/components.css">
+<link rel="stylesheet" href="./css/responsive.css">
 </head>
-<body>
+<body class="bg-ld-bg text-ld-ink font-sans antialiased overflow-x-hidden">
 
-  <!-- fondo animado -->
-  <div class="bg-scene" aria-hidden="true">
-    <div class="blob blob-a"></div>
-    <div class="blob blob-b"></div>
-    <div class="blob blob-c"></div>
-    <svg class="veins" viewBox="0 0 800 900" xmlns="http://www.w3.org/2000/svg">
-      <path d="M700 0 C 650 60, 730 120, 660 180 C 600 235, 670 280, 610 340 C 560 390, 620 430, 570 480" fill="none" stroke="currentColor" stroke-width="1"/>
-      <path d="M780 40 C 740 90, 800 140, 750 190 C 710 230, 760 270, 720 320" fill="none" stroke="currentColor" stroke-width="1"/>
-    </svg>
-  </div>
+<!-- fondo ambiental -->
+<div class="bg-scene" aria-hidden="true">
+  <div class="ambient-blob ambient-blob-a"></div>
+  <div class="ambient-blob ambient-blob-b"></div>
+  <div class="ambient-blob ambient-blob-c"></div>
+  <div class="ambient-glow ambient-hero-glow"></div>
+  <svg class="ambient-veins" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M350 0 C 320 50, 370 100, 330 150 C 290 200, 350 250, 310 300" fill="none" stroke="currentColor" stroke-width="1"/>
+    <path d="M380 60 C 340 110, 390 160, 350 200 C 320 240, 370 280, 340 300" fill="none" stroke="currentColor" stroke-width="0.8"/>
+    <path d="M320 30 C 290 70, 340 110, 300 150 C 270 190, 310 230, 280 270" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.6"/>
+  </svg>
+</div>
 
-  <!-- nav -->
-  <nav class="nav">
-    <div class="nav-brand">
-      <span class="logo-mark" aria-hidden="true">
-        <img src="./logo.png" alt="">
+<!-- NAVBAR -->
+<nav id="nav" role="navigation" aria-label="Navegación principal">
+  <div class="max-w-[1100px] mx-auto flex items-center justify-between px-6 py-3">
+    <a class="flex items-center gap-[10px] text-ld-ink no-underline font-semibold text-sm" href="#hero" aria-label="Lichen Dreams - Inicio">
+      <span class="flex items-center justify-center w-9 h-9 rounded-lg overflow-hidden flex-shrink-0" style="background:rgba(125,137,109,0.15);">
+        <img src="./assets/images/logo.png" alt="" width="36" height="36" style="width:100%;height:100%;object-fit:cover;display:block;">
       </span>
-      Lichen Dreams
+      <span class="nav-brand-text">Lichen Dreams</span>
+    </a>
+    <div class="nav-desktop items-center gap-1">
+      <a class="nav-link" href="#hero">Inicio</a>
+      <a class="nav-link" href="#features">Características</a>
+      <a class="nav-link" href="#how">Cómo funciona</a>
+      <a class="nav-link" href="#download">Descargar</a>
+      <a class="nav-link" href="#version">Versión actual</a>
+      <a class="nav-link" href="#historial">Historial</a>
+      <a class="nav-link" href="#faq">FAQ</a>
+      <a class="nav-link" href="#download" style="border-color:var(--ld-line-strong);color:var(--ld-ink);"><i data-lucide="download" style="width:14px;height:14px;"></i> Descargar</a>
     </div>
-    <a class="nav-link" href="#historial">Historial</a>
-  </nav>
+    <button id="menu-toggle" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="mobile-menu" style="display:flex;align-items:center;justify-content:center;">
+      <i data-lucide="menu" style="width:22px;height:22px;"></i>
+    </button>
+  </div>
+</nav>
 
-  <!-- hero -->
-  <header class="hero reveal">
-    <svg class="lichen-deco" viewBox="0 0 260 260" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <path d="M 210.1 150.0 C 209.5 160.6, 197.8 168.7, 195.3 181.2 C 192.9 193.7, 202.7 218.4, 195.1 225.1 C 187.5 231.9, 162.2 217.5, 149.7 221.8 C 137.2 226.0, 130.8 248.3, 120.0 250.6 C 109.2 252.8, 93.8 242.8, 84.7 235.1 C 75.7 227.5, 75.0 212.3, 65.6 204.4 C 56.2 196.6, 32.0 197.0, 28.4 187.9 C 24.8 178.9, 43.5 162.4, 44.0 150.0 C 44.6 137.6, 28.2 122.6, 31.7 113.4 C 35.3 104.3, 55.5 101.2, 65.2 95.2 C 74.9 89.2, 80.8 84.1, 89.9 77.4 C 99.1 70.7, 107.7 60.5, 120.0 54.9 C 132.3 49.3, 154.5 37.4, 164.0 43.8 C 173.4 50.2, 170.9 81.0, 176.7 93.3 C 182.5 105.5, 193.1 108.0, 198.6 117.4 C 204.2 126.9, 210.6 139.4, 210.1 150.0 Z" fill="#2E3D26" opacity="0.9"/>
-      <path d="M 191.5 135.0 C 193.8 147.8, 203.2 166.1, 198.2 176.5 C 193.1 186.9, 172.9 192.4, 161.3 197.5 C 149.6 202.5, 139.5 199.9, 128.3 206.7 C 117.1 213.4, 102.9 241.3, 94.2 237.8 C 85.4 234.3, 87.2 193.2, 75.8 185.6 C 64.4 178.0, 32.5 198.4, 26.0 192.4 C 19.4 186.4, 33.5 161.3, 36.4 149.6 C 39.2 137.8, 40.1 130.4, 43.2 121.9 C 46.3 113.4, 50.6 106.7, 55.0 98.6 C 59.3 90.6, 62.8 83.2, 69.5 73.4 C 76.1 63.7, 85.7 39.9, 95.0 39.9 C 104.3 39.9, 114.0 67.9, 125.1 73.3 C 136.1 78.7, 151.5 68.0, 161.4 72.4 C 171.3 76.7, 179.5 89.2, 184.5 99.6 C 189.5 110.0, 189.2 122.2, 191.5 135.0 Z" fill="#4F6B45" opacity="0.85"/>
-      <path d="M 207.7 110.0 C 209.3 118.5, 212.1 131.5, 207.4 137.7 C 202.7 143.8, 187.2 143.8, 179.4 146.9 C 171.6 149.9, 167.3 153.5, 160.5 155.9 C 153.6 158.2, 147.3 159.5, 138.4 160.7 C 129.6 162.0, 114.5 167.5, 107.4 163.4 C 100.4 159.2, 98.5 144.8, 96.3 135.9 C 94.1 127.0, 95.1 119.0, 94.3 110.0 C 93.4 101.0, 88.4 89.7, 91.4 81.8 C 94.4 73.9, 104.6 67.0, 112.3 62.7 C 120.0 58.4, 128.7 60.0, 137.7 56.1 C 146.7 52.3, 156.8 39.6, 166.1 39.6 C 175.3 39.6, 187.6 48.3, 193.0 56.1 C 198.3 64.0, 195.6 77.9, 198.1 86.9 C 200.5 95.8, 206.2 101.5, 207.7 110.0 Z" fill="#5C7A50" opacity="0.8"/>
-      <path d="M 150.0 110.0 C 148.0 118.3, 145.3 123.9, 143.7 132.3 C 142.1 140.6, 145.1 153.9, 140.4 160.4 C 135.6 166.8, 123.6 171.0, 115.2 170.8 C 106.8 170.6, 99.0 157.8, 90.0 159.3 C 81.0 160.7, 66.3 182.6, 61.2 179.4 C 56.2 176.3, 63.2 148.5, 59.7 140.3 C 56.1 132.2, 46.1 135.8, 40.0 130.7 C 33.9 125.7, 21.7 116.3, 23.2 110.0 C 24.7 103.7, 44.7 99.8, 49.2 93.1 C 53.6 86.4, 45.6 73.2, 49.8 69.8 C 54.1 66.5, 68.0 77.0, 74.7 73.1 C 81.4 69.2, 83.2 50.7, 90.0 46.5 C 96.8 42.3, 108.6 44.5, 115.7 48.0 C 122.7 51.5, 125.7 61.8, 132.4 67.6 C 139.1 73.4, 152.9 75.7, 155.8 82.7 C 158.8 89.8, 152.0 101.7, 150.0 110.0 Z" fill="#8FAE7E" opacity="0.75"/>
-      <path d="M 179.1 80.0 C 178.0 88.2, 185.4 96.4, 183.3 102.7 C 181.2 109.1, 172.6 114.3, 166.3 118.1 C 160.0 121.9, 152.4 125.3, 145.5 125.6 C 138.6 125.9, 132.3 121.8, 124.8 120.0 C 117.3 118.2, 107.0 119.3, 100.6 114.9 C 94.2 110.4, 86.8 100.8, 86.3 93.2 C 85.9 85.7, 95.1 77.2, 98.0 69.7 C 101.0 62.1, 98.9 51.5, 104.0 48.1 C 109.1 44.7, 121.4 52.3, 128.4 49.5 C 135.4 46.7, 139.5 32.8, 145.9 31.3 C 152.4 29.9, 159.7 37.0, 167.1 40.8 C 174.4 44.5, 188.0 47.2, 190.0 53.7 C 192.1 60.3, 180.2 71.8, 179.1 80.0 Z" fill="#A8C878" opacity="0.65"/>
-      <path d="M 165.2 81.3 C 164.8 83.7, 159.1 85.1, 157.1 87.5 C 155.1 89.8, 155.2 94.4, 153.2 95.2 C 151.1 96.1, 147.3 93.8, 145.0 92.6 C 142.7 91.4, 140.6 89.9, 139.4 88.0 C 138.3 86.1, 138.7 84.1, 137.8 81.3 C 137.0 78.5, 133.2 72.8, 134.4 71.0 C 135.6 69.2, 142.1 70.7, 145.1 70.4 C 148.1 70.1, 150.1 68.9, 152.5 69.3 C 155.0 69.8, 157.8 71.1, 159.9 73.1 C 162.0 75.1, 165.7 78.9, 165.2 81.3 Z" fill="#C4E094" opacity="0.5"/>
-      <path d="M 170.8 58.9 C 171.8 62.0, 172.2 67.4, 170.4 70.4 C 168.7 73.4, 164.1 75.7, 160.4 76.9 C 156.8 78.1, 151.4 79.0, 148.6 77.3 C 145.8 75.7, 145.1 69.9, 143.6 66.8 C 142.1 63.8, 139.8 61.6, 139.6 58.9 C 139.5 56.1, 141.5 53.5, 143.0 50.4 C 144.4 47.3, 145.5 42.0, 148.5 40.2 C 151.5 38.4, 158.2 37.6, 160.9 39.5 C 163.5 41.4, 162.8 48.4, 164.5 51.6 C 166.2 54.9, 169.9 55.7, 170.8 58.9 Z" fill="#C4E094" opacity="0.5"/>
-      <path d="M 84.1 75.5 C 84.2 78.2, 84.0 81.9, 82.4 83.7 C 80.8 85.4, 76.9 86.0, 74.6 86.1 C 72.3 86.2, 70.6 84.6, 68.4 84.1 C 66.1 83.5, 62.6 84.3, 61.1 82.8 C 59.5 81.4, 59.3 78.1, 59.1 75.5 C 58.9 73.0, 58.9 70.2, 60.1 67.5 C 61.2 64.8, 63.3 60.4, 65.9 59.5 C 68.5 58.5, 73.0 60.2, 75.7 61.5 C 78.3 62.9, 80.5 65.4, 81.9 67.7 C 83.3 70.1, 84.1 72.9, 84.1 75.5 Z" fill="#C4E094" opacity="0.5"/>
-      <path d="M 137.8 124.4 C 138.5 126.4, 136.1 129.8, 134.5 131.9 C 132.9 134.1, 130.7 136.4, 128.3 137.2 C 125.9 138.0, 122.2 137.9, 120.1 136.7 C 118.0 135.6, 116.9 132.4, 115.9 130.4 C 114.8 128.3, 113.6 126.2, 113.9 124.4 C 114.2 122.6, 116.4 121.5, 117.5 119.6 C 118.6 117.7, 118.9 113.6, 120.5 113.1 C 122.0 112.7, 124.9 115.8, 126.5 116.9 C 128.2 118.0, 128.6 118.5, 130.5 119.7 C 132.4 121.0, 137.1 122.3, 137.8 124.4 Z" fill="#C4E094" opacity="0.5"/>
-      <path d="M 85.4 67.9 C 85.1 70.0, 84.2 71.9, 83.0 73.6 C 81.9 75.4, 80.4 77.8, 78.5 78.5 C 76.6 79.3, 74.1 78.6, 71.7 78.1 C 69.4 77.6, 65.5 77.3, 64.4 75.6 C 63.3 73.9, 65.6 70.9, 65.0 67.9 C 64.3 64.8, 59.7 59.8, 60.6 57.4 C 61.5 54.9, 67.3 53.2, 70.3 53.1 C 73.3 53.1, 76.1 55.9, 78.5 57.2 C 81.0 58.4, 83.7 58.9, 84.9 60.7 C 86.0 62.5, 85.7 65.7, 85.4 67.9 Z" fill="#C4E094" opacity="0.5"/>
-      <path d="M 106.1 90.1 C 106.9 92.5, 106.0 97.3, 104.2 99.1 C 102.4 101.0, 97.9 100.7, 95.2 101.0 C 92.6 101.3, 89.9 102.1, 88.1 101.1 C 86.3 100.2, 85.5 97.0, 84.7 95.2 C 83.8 93.3, 83.2 91.9, 82.9 90.1 C 82.6 88.2, 82.2 85.4, 83.1 83.8 C 84.1 82.2, 86.4 81.8, 88.6 80.5 C 90.8 79.3, 94.3 75.9, 96.1 76.5 C 97.8 77.2, 97.5 82.4, 99.2 84.6 C 100.8 86.9, 105.2 87.6, 106.1 90.1 Z" fill="#C4E094" opacity="0.5"/>
-    </svg>
+<!-- MOBILE MENU -->
+<div id="mobile-menu" role="dialog" aria-label="Menú de navegación">
+  <button id="mobile-menu-close" aria-label="Cerrar menú" style="position:absolute;top:14px;right:14px;background:none;border:none;color:var(--ld-ink);cursor:pointer;padding:8px;">
+    <i data-lucide="x" style="width:26px;height:26px;"></i>
+  </button>
+  <a href="#hero">Inicio</a>
+  <a href="#features">Características</a>
+  <a href="#how">Cómo funciona</a>
+  <a href="#download">Descargar</a>
+  <a href="#historial">Versiones</a>
+  <a href="#faq">FAQ</a>
+</div>
 
-    <p class="eyebrow">Android · Descarga directa</p>
-    <h1>Lleva el bosque<br>en tu bolsillo.</h1>
-    <p class="tagline">Analiza líquenes, mide la calidad del aire de tu entorno y aprende con Liquenpedia. Escanea, descarga, listo.</p>
-  </header>
-
-  <!-- descarga principal -->
-  <main>
-    <section class="download-card reveal" id="current-block">
-      <!-- se llena con JS -->
-    </section>
-
-    <section class="history" id="historial">
-      <div class="history-heading reveal">
-        <h2>
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3 12a9 9 0 1 0 3-6.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M3 4v5h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M12 8v5l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          Historial de versiones
-        </h2>
-        <p>Todas las publicaciones anteriores, por si necesitas volver a una versión específica.</p>
+<!-- HERO -->
+<header id="hero" class="hero">
+  <div class="hero-grid">
+    <div id="hero-content" class="hero-content"></div>
+    <div class="hero-sidebar">
+      <div class="phone-frame phone-float" aria-hidden="true">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <img class="phone-screen-icon" src="./assets/images/logo.png" alt="">
+          <p class="phone-screen-title">Lichen Dreams</p>
+          <p class="phone-screen-sub">Bioindicación ambiental con IA</p>
+          <div class="phone-screen-card">
+            <div class="phone-screen-bar" style="width:85%;"></div>
+            <div class="phone-screen-bar-2"></div>
+            <div class="phone-screen-bar-3"></div>
+          </div>
+        </div>
       </div>
+    </div>
+  </div>
+  <!-- Hero decorative SVGs -->
+  <img class="hero-decor hero-decor-branch" src="./assets/svg/lichen-branch-detail.svg" alt="" aria-hidden="true">
+  <img class="hero-decor hero-decor-rosette" src="./assets/svg/lichen-rosette.svg" alt="" aria-hidden="true">
+</header>
 
-      <div id="history-list" class="history-list reveal"></div>
-    </section>
-  </main>
+<main class="container relative z-1" style="z-index:1;">
 
-  <footer class="reveal">
-    <img class="footer-lichen" src="./img/lichen.png" alt="">
-    <div class="footer-line"></div>
-    <p>Proyecto ADSO · SENA</p>
-    <a href="https://github.com/Andres0607MP/Lichen-Dreams" target="_blank" rel="noopener">Ver código en GitHub ↗</a>
-  </footer>
+  <!-- DESCARGA -->
+  <section id="download" class="section" aria-labelledby="download-heading">
+    <div class="section-heading reveal text-center" style="margin-bottom:40px;">
+      <p class="section-label">Descarga</p>
+      <h2 id="download-heading">Lichen Dreams para Android</h2>
+      <p>Descarga directa. Compatible con dispositivos Android.</p>
+    </div>
+    <div class="download-grid">
+      <div id="download-card" class="ld-card download-card-main reveal"></div>
+      <div id="download-sidebar" class="download-sidebar reveal"></div>
+    </div>
+  </section>
 
-  <script src="script.js"></script>
+<!-- ¿QUÉ ES LICHEN DREAMS? -->
+<section id="about" class="section" aria-labelledby="about-heading">
+  <div class="section-heading reveal">
+    <p class="section-label">Sobre la aplicación</p>
+    <h2 id="about-heading">¿Qué es Lichen Dreams?</h2>
+    <p>Una aplicación móvil que utiliza líquenes como bioindicadores para analizar la calidad del aire mediante inteligencia artificial. La IA evalúa el estado visual del líquen en tres categorías: saludable, contaminado o no identificado.</p>
+  </div>
+  <div class="about-grid grid gap-4" style="grid-template-columns:1fr;">
+    <div class="about-item reveal" style="grid-column:1/-1;">
+      <div class="about-icon"><i data-lucide="leaf"></i></div>
+      <h3>Bioindicación con IA</h3>
+      <p>Los líquenes son organismos simbióticos sensibles a las condiciones ambientales. Lichen Dreams analiza visualmente su estado mediante IA y lo utiliza como indicador ambiental cualitativo. La IA no identifica especies taxonómicas.</p>
+    </div>
+    <div class="about-item reveal" style="grid-column:1/-1;">
+      <div class="about-icon"><i data-lucide="map"></i></div>
+      <h3>Mapa ambiental colaborativo</h3>
+      <p>Observaciones georreferenciadas propias y de la comunidad, con zonas de transición derivadas de la proximidad entre líquenes saludables y contaminados.</p>
+    </div>
+    <div class="about-item reveal" style="grid-column:1/-1;">
+      <div class="about-icon"><i data-lucide="book-open"></i></div>
+      <h3>Lichenpedia e Historial</h3>
+      <p>Enciclopedia educativa sobre líquenes y bioindicación, más bitácora personal con filtros, estadísticas y perfil ambiental (radar).</p>
+    </div>
+  </div>
+  <!-- About decorative SVG -->
+  <img class="about-decor about-decor-bark" src="./assets/svg/lichen-bark.svg" alt="" aria-hidden="true">
+</section>
+
+<!-- CARACTERÍSTICAS -->
+<section id="features" class="section" aria-labelledby="features-heading">
+  <div class="section-heading reveal">
+    <p class="section-label">Funciones</p>
+    <h2 id="features-heading">Características</h2>
+    <p>Funciones principales de Lichen Dreams.</p>
+  </div>
+  <div id="features-grid" class="feature-grid"></div>
+  <!-- Features decorative SVGs -->
+  <img class="features-decor features-decor-leaf" src="./assets/svg/lichen-leaf.svg" alt="" aria-hidden="true">
+  <img class="features-decor features-decor-colony" src="./assets/svg/lichen-colony.svg" alt="" aria-hidden="true">
+  <img class="features-decor features-decor-crust" src="./assets/svg/lichen-crust.svg" alt="" aria-hidden="true">
+</section>
+
+<!-- SCREENSHOTS -->
+<section id="gallery" class="section" aria-labelledby="gallery-heading">
+  <div class="section-heading reveal">
+    <p class="section-label">Capturas</p>
+    <h2 id="gallery-heading">Explora la aplicación</h2>
+    <p>Una mirada a la interfaz y funciones de Lichen Dreams.</p>
+  </div>
+  <div id="gallery-grid" class="gallery-grid"></div>
+  <!-- Gallery decorative SVG -->
+  <img class="gallery-decor gallery-decor-texture" src="./assets/svg/lichen-texture.svg" alt="" aria-hidden="true">
+</section>
+
+<!-- CÓMO FUNCIONA -->
+<section id="how" class="section" aria-labelledby="how-heading">
+  <div class="section-heading reveal">
+    <p class="section-label">Proceso</p>
+    <h2 id="how-heading">¿Cómo funciona?</h2>
+    <p>De la captura al conocimiento en cuatro pasos.</p>
+  </div>
+  <div id="how-grid" class="flow-grid"></div>
+  <!-- How it works decorative SVGs -->
+  <img class="how-decor how-decor-observation" src="./assets/svg/lichen-observation.svg" alt="" aria-hidden="true">
+  <img class="how-decor how-decor-microscope" src="./assets/svg/lichen-microscope.svg" alt="" aria-hidden="true">
+  <img class="how-decor how-decor-growth" src="./assets/svg/lichen-growth.svg" alt="" aria-hidden="true">
+  <img class="how-decor how-decor-rock" src="./assets/svg/lichen-rock.svg" alt="" aria-hidden="true">
+</section>
+
+<!-- VERSIÓN ACTUAL -->
+<section id="version" class="section" aria-labelledby="version-heading">
+  <div class="section-heading reveal">
+    <p class="section-label">Lanzamiento</p>
+    <h2 id="version-heading">Versión actual</h2>
+    <p>Detalles de la versión actual del proyecto.</p>
+  </div>
+  <div id="version-hero" class="reveal"></div>
+  <!-- Version decorative SVGs -->
+  <img class="version-decor version-decor-branch" src="./assets/svg/lichen-branch-detail.svg" alt="" aria-hidden="true">
+  <img class="version-decor version-decor-rosette" src="./assets/svg/lichen-rosette.svg" alt="" aria-hidden="true">
+</section>
+
+<!-- HISTORIAL -->
+<section id="historial" class="section" aria-labelledby="history-heading">
+  <div class="section-heading reveal">
+    <p class="section-label">Historial</p>
+    <h2 id="history-heading">Historial de versiones</h2>
+    <p>Publicaciones oficiales a medida que estén disponibles.</p>
+  </div>
+  <div id="history-list" class="reveal"></div>
+  <!-- History decorative SVG -->
+  <img class="history-decor history-decor-spores" src="./assets/svg/lichen-spores.svg" alt="" aria-hidden="true">
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="section" aria-labelledby="faq-heading">
+  <div class="section-heading reveal text-center" style="margin-bottom:32px;">
+    <p class="section-label">Preguntas</p>
+    <h2 id="faq-heading">Preguntas frecuentes</h2>
+    <p>Respuestas a las consultas más comunes sobre Lichen Dreams.</p>
+  </div>
+  <div id="faq-grid" class="faq-grid"></div>
+  <!-- FAQ decorative SVG -->
+  <img class="faq-decor faq-decor-texture" src="./assets/svg/lichen-texture.svg" alt="" aria-hidden="true">
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <img class="footer-lichen" src="./assets/images/lichen.png" alt="" loading="lazy">
+  <div class="footer-line"></div>
+  <div class="footer-content">
+    <div class="footer-grid">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+          <img class="footer-logo" src="./assets/images/logo.png" alt="Lichen Dreams" width="32" height="32">
+          <span style="font-weight:600;font-size:15px;color:var(--ld-ink);">Lichen Dreams</span>
+        </div>
+        <p style="color:var(--ld-ink-muted);font-size:13px;line-height:1.6;max-width:280px;">Sitio oficial de descarga de la aplicación. Acceso directo a versiones, información y recursos.</p>
+      </div>
+      <div>
+        <p style="font-weight:700;font-size:12px;color:var(--ld-ink);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px;">Navegación</p>
+        <div class="footer-nav">
+          <a href="#hero">Inicio</a>
+          <a href="#features">Características</a>
+          <a href="#how">Cómo funciona</a>
+          <a href="#download">Descargar</a>
+          <a href="#historial">Versiones</a>
+          <a href="#faq">FAQ</a>
+        </div>
+      </div>
+      <div>
+        <p style="font-weight:700;font-size:12px;color:var(--ld-ink);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px;">Descarga</p>
+        <div class="footer-nav">
+          <a href="#download">Descargar APK</a>
+          <a href="#version">Versión actual</a>
+          <a href="#historial">Versiones anteriores</a>
+          <a href="#download">Android</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p style="margin:0;">© <span id="year"></span> Lichen Dreams</p>
+      <a href="https://github.com/HeidyVivas/Qr_Lichen-Dreams" target="_blank" rel="noopener">Código en GitHub ↗</a>
+    </div>
+  </div>
+  <!-- Footer decorative SVGs -->
+  <img class="footer-decor footer-decor-rock" src="./assets/svg/lichen-rock.svg" alt="" aria-hidden="true">
+  <img class="footer-decor footer-decor-branch" src="./assets/svg/lichen-branch-detail.svg" alt="" aria-hidden="true">
+</footer>
+
+<!-- Scripts en orden de dependencia -->
+<script src="./js/versions.js"></script>
+<script src="./js/animations.js"></script>
+<script src="./js/ui.js"></script>
+<script src="./js/app.js"></script>
 </body>
 </html>

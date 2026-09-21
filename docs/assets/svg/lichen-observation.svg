@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" fill="none">
+  <g opacity="0.55">
+    <circle cx="150" cy="150" r="100" stroke="#7D896D" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+    <circle cx="150" cy="150" r="95" stroke="#7D896D" stroke-width="1" stroke-linecap="round" opacity="0.3"/>
+    <path d="M200 200 L235 235" stroke="#7D896D" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+    <path d="M235 235 L260 260" stroke="#7D896D" stroke-width="1" stroke-linecap="round" opacity="0.3"/>
+    <ellipse cx="150" cy="135" rx="28" ry="20" stroke="#7D896D" stroke-width="1.5" opacity="0.6"/>
+    <ellipse cx="150" cy="135" rx="20" ry="14" stroke="#7D896D" stroke-width="1" opacity="0.4"/>
+    <ellipse cx="150" cy="135" rx="12" ry="8" stroke="#7D896D" stroke-width="0.6" opacity="0.3"/>
+    <circle cx="135" cy="125" r="3" fill="#7D896D" opacity="0.5"/>
+    <circle cx="165" cy="125" r="3" fill="#7D896D" opacity="0.5"/>
+    <circle cx="150" cy="150" r="2.5" fill="#7D896D" opacity="0.4"/>
+    <circle cx="140" cy="142" r="2" fill="#7D896D" opacity="0.35"/>
+    <circle cx="160" cy="142" r="2" fill="#7D896D" opacity="0.35"/>
+    <path d="M120 160 C 122 158, 125 157, 128 158 C 130 159, 130 162, 128 164 C 125 166, 122 165, 120 164 Z" fill="#7D896D" opacity="0.4"/>
+    <path d="M180 160 C 182 158, 185 157, 188 158 C 190 159, 190 162, 188 164 C 185 166, 182 165, 180 164 Z" fill="#7D896D" opacity="0.4"/>
+    <path d="M110 110 C 113 108, 117 108, 120 110 C 122 112, 121 115, 118 116 C 115 117, 111 115, 110 113 Z" fill="#7D896D" opacity="0.35"/>
+    <path d="M190 110 C 193 108, 197 108, 200 110 C 202 112, 201 115, 198 116 C 195 117, 191 115, 190 113 Z" fill="#7D896D" opacity="0.35"/>
+    <path d="M85 170 C 88 168, 92 167, 95 168 C 98 169, 99 172, 97 174 C 94 176, 90 175, 87 173 Z" fill="#7D896D" opacity="0.3"/>
+    <path d="M215 170 C 218 168, 222 167, 225 168 C 228 169, 229 172, 227 174 C 224 176, 220 175, 217 173 Z" fill="#7D896D" opacity="0.3"/>
+    <path d="M100 190 C 103 188, 107 188, 110 190 C 112 192, 111 195, 108 196 C 105 197, 101 195, 100 193 Z" fill="#7D896D" opacity="0.3"/>
+    <path d="M200 190 C 203 188, 207 188, 210 190 C 212 192, 211 195, 208 196 C 205 197, 201 195, 200 193 Z" fill="#7D896D" opacity="0.3"/>
+    <circle cx="150" cy="135" r="35" stroke="#7D896D" stroke-width="0.4" opacity="0.15" stroke-dasharray="4 6"/>
+    <circle cx="150" cy="135" r="50" stroke="#7D896D" stroke-width="0.3" opacity="0.1" stroke-dasharray="3 8"/>
+    <path d="M150 50 L150 60" stroke="#7D896D" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+    <path d="M150 240 L150 250" stroke="#7D896D" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+    <path d="M50 150 L60 150" stroke="#7D896D" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+    <path d="M240 150 L250 150" stroke="#7D896D" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+  </g>
+</svg>

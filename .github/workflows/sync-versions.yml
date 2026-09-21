@@ -1,0 +1,52 @@
+name: Sync Versions from Releases
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync-versions:
+    name: Generate versions.js from Releases
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci --prefix scripts 2>/dev/null || echo "No package.json in scripts, using built-in modules"
+
+      - name: Generate versions.js
+        id: generate
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPOSITORY: ${{ github.repository }}
+        run: node scripts/generate-versions.js
+
+      - name: Commit and push if changed
+        if: steps.generate.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/js/versions.js
+          git commit -m "chore: sync versions from release ${{ github.event.release.tag_name || 'manual' }}"
+          git push
+
+      - name: Summary
+        run: |
+          echo "## Sync Versions Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- Trigger: ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Release: ${{ github.event.release.tag_name || 'manual dispatch' }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Changed: ${{ steps.generate.outputs.changed }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Versions synced: ${{ steps.generate.outputs.count }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Latest: ${{ steps.generate.outputs.latest }}" >> $GITHUB_STEP_SUMMARY

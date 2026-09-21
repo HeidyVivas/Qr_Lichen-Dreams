@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" fill="none">
+  <g opacity="0.55">
+    <circle cx="150" cy="150" r="5" fill="#7D896D" opacity="0.7"/>
+    <path d="M150 150 C 155 145, 160 142, 168 142 C 175 142, 180 145, 182 150" stroke="#7D896D" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+    <path d="M150 150 C 145 145, 140 142, 132 142 C 125 142, 120 145, 118 150" stroke="#7D896D" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+    <path d="M150 150 C 155 155, 158 158, 158 165 C 158 172, 155 177, 150 180" stroke="#7D896D" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+    <path d="M150 150 C 145 155, 142 158, 135 158 C 128 158, 122 155, 120 150" stroke="#7D896D" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+    <path d="M150 150 C 165 150, 175 152, 185 150" stroke="#7D896D" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+    <path d="M150 150 C 135 150, 125 148, 115 150" stroke="#7D896D" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+    <path d="M150 150 C 150 165, 152 175, 150 185" stroke="#7D896D" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+    <path d="M150 150 C 150 135, 148 125, 150 115" stroke="#7D896D" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+    <path d="M168 142 C 175 135, 182 130, 192 128 C 200 126, 208 125, 215 128" stroke="#7D896D" stroke-width="1" stroke-linecap="round" opacity="0.5"/>
+    <path d="M182 150 C 190 155, 198 158, 208 158 C 215 158, 222 155, 228 150" stroke="#7D896D" stroke-width="1" stroke-linecap="round" opacity="0.5"/>
+    <path d="M158 165 C 162 172, 165 180, 165 188 C 165 195, 162 202, 158 208" stroke="#7D896D" stroke-width="1" stroke-linecap="round" opacity="0.5"/>
+    <path d="M132 142 C 125 135, 118 130, 108 128 C 100 126, 92 125, 85 128" stroke="#7D896D" stroke-width="1" stroke-linecap="round" opacity="0.5"/>
+    <path d="M118 150 C 110 155, 102 158, 92 158 C 85 158, 78 155, 72 150" stroke="#7D896D" stroke-width="1" stroke-linecap="round" opacity="0.5"/>
+    <path d="M142 158 C 138 165, 135 172, 135 180 C 135 187, 138 194, 142 200" stroke="#7D896D" stroke-width="1" stroke-linecap="round" opacity="0.5"/>
+    <path d="M150 115 C 152 108, 155 102, 155 95 C 155 88, 152 82, 150 75" stroke="#7D896D" stroke-width="1" stroke-linecap="round" opacity="0.5"/>
+    <path d="M192 128 C 198 122, 205 118, 212 115 C 218 112, 225 110, 230 112" stroke="#7D896D" stroke-width="0.8" stroke-linecap="round" opacity="0.4"/>
+    <path d="M208 158 C 215 162, 222 165, 230 165 C 237 165, 243 162, 248 158" stroke="#7D896D" stroke-width="0.8" stroke-linecap="round" opacity="0.4"/>
+    <path d="M165 188 C 168 195, 170 202, 170 210 C 170 217, 168 223, 165 228" stroke="#7D896D" stroke-width="0.8" stroke-linecap="round" opacity="0.4"/>
+    <path d="M108 128 C 102 122, 95 118, 88 115 C 82 112, 75 110, 70 112" stroke="#7D896D" stroke-width="0.8" stroke-linecap="round" opacity="0.4"/>
+    <path d="M92 158 C 85 162, 78 165, 70 165 C 63 165, 57 162, 52 158" stroke="#7D896D" stroke-width="0.8" stroke-linecap="round" opacity="0.4"/>
+    <path d="M135 180 C 132 187, 130 194, 130 202 C 130 209, 132 215, 135 220" stroke="#7D896D" stroke-width="0.8" stroke-linecap="round" opacity="0.4"/>
+    <path d="M155 95 C 158 88, 160 82, 160 75 C 160 68, 158 62, 155 55" stroke="#7D896D" stroke-width="0.8" stroke-linecap="round" opacity="0.4"/>
+    <circle cx="192" cy="128" r="3" fill="#7D896D" opacity="0.5"/>
+    <circle cx="208" cy="158" r="3.5" fill="#7D896D" opacity="0.5"/>
+    <circle cx="165" cy="188" r="3" fill="#7D896D" opacity="0.5"/>
+    <circle cx="108" cy="128" r="2.5" fill="#7D896D" opacity="0.4"/>
+    <circle cx="92" cy="158" r="3" fill="#7D896D" opacity="0.4"/>
+    <circle cx="135" cy="180" r="2.5" fill="#7D896D" opacity="0.4"/>
+    <circle cx="155" cy="95" r="2.5" fill="#7D896D" opacity="0.4"/>
+    <circle cx="212" cy="115" r="2" fill="#7D896D" opacity="0.35"/>
+    <circle cx="230" cy="165" r="2" fill="#7D896D" opacity="0.35"/>
+    <circle cx="170" cy="210" r="2" fill="#7D896D" opacity="0.35"/>
+    <circle cx="88" cy="115" r="1.5" fill="#7D896D" opacity="0.3"/>
+    <circle cx="70" cy="165" r="2" fill="#7D896D" opacity="0.3"/>
+    <circle cx="130" cy="202" r="1.5" fill="#7D896D" opacity="0.3"/>
+    <circle cx="160" cy="75" r="1.5" fill="#7D896D" opacity="0.3"/>
+    <circle cx="150" cy="150" r="18" stroke="#7D896D" stroke-width="0.5" opacity="0.25" stroke-dasharray="4 4"/>
+    <circle cx="150" cy="150" r="35" stroke="#7D896D" stroke-width="0.3" opacity="0.15" stroke-dasharray="3 6"/>
+    <circle cx="150" cy="150" r="55" stroke="#7D896D" stroke-width="0.2" opacity="0.1" stroke-dasharray="2 8"/>
+  </g>
+</svg>
