@@ -9,6 +9,15 @@
 
 const VERSIONS = [
   {
+    version: "1.2.2",
+    build: null,
+    date: "2026-09-24",
+    size: "70.9 MB",
+    sha256: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    url: "https://github.com/HeidyVivas/Qr_Lichen-Dreams/releases/download/v1.2.2/Lichen_Dreams_v1.2.2.apk",
+    changelog: []
+  },
+  {
     version: "1.2.1",
     build: null,
     date: "2026-09-24",
