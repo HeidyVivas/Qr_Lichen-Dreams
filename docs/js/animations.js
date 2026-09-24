@@ -10,6 +10,10 @@ const AnimationManager = {
     this.initScrollReveal();
     this.initGlassNav();
     this.initHeroEntrance();
+    this.initPhoneFloat();
+    this.initDecorativeObserver();
+    this.initScrollCue();
+    this.initActiveNav();
     this.initMobileMenu();
   },
 
@@ -39,6 +43,33 @@ const AnimationManager = {
     window.addEventListener('scroll', onScroll, { passive: true });
   },
 
+  initActiveNav() {
+    const sections = ['hero', 'features', 'how', 'download', 'historial', 'faq'];
+    const navLinks = document.querySelectorAll('.nav-desktop .nav-link[href^="#"], #mobile-menu a[href^="#"]');
+    if (!navLinks.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          navLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href === '#' + id) {
+              link.setAttribute('aria-current', 'true');
+            } else {
+              link.removeAttribute('aria-current');
+            }
+          });
+        }
+      });
+    }, { threshold: 0.4, rootMargin: '-20% 0px -60% 0px' });
+
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+  },
+
   initHeroEntrance() {
     if (this.prefersReducedMotion()) return;
     const hero = document.getElementById('hero');
@@ -47,9 +78,26 @@ const AnimationManager = {
     els.forEach((el, i) => {
       el.style.opacity = '0';
       el.style.transform = 'translateY(24px)';
-      el.style.transition = 'opacity 0.9s cubic-bezier(0.4,0,0.2,1) ' + (i * 0.12) + 's, transform 0.9s cubic-bezier(0.4,0,0.2,1) ' + (i * 0.12) + 's';
+      el.style.transition = 'opacity var(--motion-entrance) var(--easing-standard) ' + (i * 0.12) + 's, transform var(--motion-entrance) var(--easing-standard) ' + (i * 0.12) + 's';
       requestAnimationFrame(() => { setTimeout(() => { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; }, 100); });
     });
+  },
+
+  initPhoneFloat() {
+    if (this.prefersReducedMotion()) return;
+    const phoneFrame = document.querySelector('.hero-sidebar .phone-frame');
+    if (!phoneFrame) return;
+
+    // Start float animation after entrance completes (last element stagger + entrance duration)
+    const entranceDuration = 900; // ms
+    const staggerCount = document.querySelectorAll('.hero-animate').length;
+    const delay = entranceDuration + (staggerCount * 120) + 200; // buffer
+
+    setTimeout(() => {
+      if (window.matchMedia('(min-width: 1024px)').matches) {
+        phoneFrame.style.animation = 'phone-float 4s ease-in-out infinite';
+      }
+    }, delay);
   },
 
   initMobileMenu() {
@@ -65,5 +113,62 @@ const AnimationManager = {
     if (closeBtn) closeBtn.addEventListener('click', close);
     menu.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && menu.classList.contains('open')) close(); });
+  },
+
+  initDecorativeObserver() {
+    if (this.prefersReducedMotion()) return;
+    const decorativeSelectors = [
+      '.hero-decor',
+      '.about-decor',
+      '.features-decor',
+      '.how-decor',
+      '.history-decor',
+      '.faq-decor',
+      '.gallery-decor',
+      '.footer-decor'
+    ];
+    const elements = document.querySelectorAll(decorativeSelectors.join(', '));
+    if (!elements.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.remove('paused');
+        } else {
+          entry.target.classList.add('paused');
+        }
+      });
+    }, { threshold: 0, rootMargin: '100px' });
+
+    elements.forEach(el => observer.observe(el));
+  },
+
+  initScrollCue() {
+    const scrollCue = document.querySelector('.scroll-cue');
+    if (!scrollCue) return;
+
+    scrollCue.addEventListener('click', () => {
+      const features = document.getElementById('features');
+      if (features) {
+        features.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+
+    // Hide scroll cue after user scrolls past hero
+    const hero = document.getElementById('hero');
+    if (!hero) return;
+
+    const onScroll = () => {
+      if (window.scrollY > hero.offsetHeight * 0.3) {
+        scrollCue.style.opacity = '0';
+        scrollCue.style.pointerEvents = 'none';
+      } else {
+        scrollCue.style.opacity = '';
+        scrollCue.style.pointerEvents = '';
+      }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
   }
 };

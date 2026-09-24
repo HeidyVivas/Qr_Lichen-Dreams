@@ -21,9 +21,9 @@
 tailwind.config = {
   theme: {
     extend: {
-      colors: {
+      colors: { 
         'ld-bg': '#0E120B', 'ld-deep': '#080B06', 'ld-elevated': '#151B12',
-        'ld-ink': '#F4F3EC', 'ld-ink-soft': '#C5CABD', 'ld-ink-muted': '#9AA192', 'ld-ink-faint': '#7A8272',
+        'ld-ink': '#F4F3EC', 'ld-ink-soft': '#C5CABD', 'ld-ink-muted': '#A8B0A0', 'ld-ink-faint': '#8F9888',
         'ld-moss': '#7D896D', 'ld-moss-mid': '#96A37D', 'ld-moss-bright': '#AEB5A0', 'ld-moss-deep': '#4E5B4A',
         'ld-accent': '#C4E094', 'ld-accent-soft': 'rgba(196,224,148,0.12)',
         'ld-line': 'rgba(244,243,236,0.07)', 'ld-line-strong': 'rgba(244,243,236,0.12)',
@@ -39,12 +39,15 @@ tailwind.config = {
 <link rel="stylesheet" href="./css/responsive.css">
 </head>
 <body class="bg-ld-bg text-ld-ink font-sans antialiased overflow-x-hidden">
+<a href="#main" class="skip-link" style="position:absolute;top:-100%;left:50%;transform:translateX(-50%);padding:12px 24px;background:var(--ld-accent);color:var(--ld-bg);font-weight:600;border-radius:var(--ld-radius-sm);z-index:1000;transition:top var(--motion-fast);">Saltar al contenido principal</a>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{const s=document.querySelector('.skip-link');s.addEventListener('focus',()=>{s.style.top='16px';});s.addEventListener('blur',()=>{s.style.top='-100%';});});
+</script>
 
 <!-- fondo ambiental -->
 <div class="bg-scene" aria-hidden="true">
   <div class="ambient-blob ambient-blob-a"></div>
   <div class="ambient-blob ambient-blob-b"></div>
-  <div class="ambient-blob ambient-blob-c"></div>
   <div class="ambient-glow ambient-hero-glow"></div>
   <svg class="ambient-veins" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <path d="M350 0 C 320 50, 370 100, 330 150 C 290 200, 350 250, 310 300" fill="none" stroke="currentColor" stroke-width="1"/>
@@ -67,7 +70,6 @@ tailwind.config = {
       <a class="nav-link" href="#features">Características</a>
       <a class="nav-link" href="#how">Cómo funciona</a>
       <a class="nav-link" href="#download">Descargar</a>
-      <a class="nav-link" href="#version">Versión actual</a>
       <a class="nav-link" href="#historial">Historial</a>
       <a class="nav-link" href="#faq">FAQ</a>
       <a class="nav-link" href="#download" style="border-color:var(--ld-line-strong);color:var(--ld-ink);"><i data-lucide="download" style="width:14px;height:14px;"></i> Descargar</a>
@@ -94,9 +96,34 @@ tailwind.config = {
 <!-- HERO -->
 <header id="hero" class="hero">
   <div class="hero-grid">
-    <div id="hero-content" class="hero-content"></div>
+    <div id="hero-content" class="hero-content">
+      <p class="eyebrow hero-animate">Android · Sitio oficial</p>
+      <h1 class="hero-animate" style="font-family:'Fraunces',Georgia,serif;font-size:clamp(42px,10vw,68px);line-height:1.05;letter-spacing:-0.02em;margin-bottom:12px;font-weight:500;">Lichen Dreams</h1>
+      <p class="tagline hero-animate">Lee el aire, entiende tu entorno.</p>
+      <p class="hero-animate" style="color:var(--ld-ink-soft);font-size:15px;max-width:40ch;margin:16px auto 0;">Analiza líquenes con IA para evaluar la calidad del aire. Comparte tus observaciones en el mapa ambiental comunitario.</p>
+      <div id="hero-badges" class="hero-badges hero-animate" style="margin-top:20px;"></div>
+      <div class="hero-meta-row hero-animate" style="margin-top:18px;color:var(--ld-ink-muted);font-size:13px;">
+        <span style="display:inline-flex;align-items:center;gap:5px;"><i data-lucide="smartphone" style="width:13px;height:13px;"></i>Android</span>
+        <span id="hero-size" style="opacity:0.3;">·</span><span id="hero-size-value"></span>
+      </div>
+      <div class="hero-actions hero-animate" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;">
+        <a id="hero-download-btn" class="btn-download" href="#" download aria-label="Descargar Lichen Dreams APK" style="max-width:260px;">
+          <i data-lucide="download"></i>
+          Descargar APK
+        </a>
+        <a class="btn-secondary" href="#historial" aria-label="Explorar historial de versiones" style="max-width:200px;">
+          <i data-lucide="clock"></i>
+          Historial
+        </a>
+      </div>
+      <div class="hero-animate" style="margin-top:16px;">
+        <button class="scroll-cue" aria-label="Desplazarse a características" type="button">
+          <span></span>
+        </button>
+      </div>
+    </div>
     <div class="hero-sidebar">
-      <div class="phone-frame phone-float" aria-hidden="true">
+      <div class="phone-frame hero-animate" aria-hidden="true">
         <div class="phone-notch"></div>
         <div class="phone-screen">
           <img class="phone-screen-icon" src="./assets/images/logo.png" alt="">
@@ -116,19 +143,105 @@ tailwind.config = {
   <img class="hero-decor hero-decor-rosette" src="./assets/svg/lichen-rosette.svg" alt="" aria-hidden="true">
 </header>
 
-<main class="container relative z-1" style="z-index:1;">
+<main id="main" class="container relative z-1" style="z-index:1;">
 
   <!-- DESCARGA -->
   <section id="download" class="section" aria-labelledby="download-heading">
-    <div class="section-heading reveal text-center" style="margin-bottom:40px;">
+    <div id="version" aria-hidden="true"></div>
+    
+    <!-- Section Header -->
+    <header class="download-header reveal">
       <p class="section-label">Descarga</p>
-      <h2 id="download-heading">Lichen Dreams para Android</h2>
-      <p>Descarga directa. Compatible con dispositivos Android.</p>
+      <h2 id="download-heading">DESCARGAR</h2>
+      <p class="download-header-meta" aria-live="polite"></p>
+    </header>
+
+    <!-- Specimen Card (Hero) -->
+    <div class="specimen-card-wrapper reveal">
+      <article id="specimen-card" class="specimen-card" aria-labelledby="specimen-title">
+        <!-- Specimen mount/pins decorative -->
+        <div class="specimen-pin specimen-pin-tl" aria-hidden="true"></div>
+        <div class="specimen-pin specimen-pin-tr" aria-hidden="true"></div>
+        <div class="specimen-pin specimen-pin-bl" aria-hidden="true"></div>
+        <div class="specimen-pin specimen-pin-br" aria-hidden="true"></div>
+        
+        <div class="specimen-card-inner">
+          <!-- Specimen icon -->
+          <div class="specimen-icon-wrap" aria-hidden="true">
+            <img id="specimen-icon" src="./assets/images/icon.png" alt="" width="120" height="120" loading="eager">
+            <div class="specimen-icon-glow" aria-hidden="true"></div>
+          </div>
+          
+          <!-- Specimen identity -->
+          <header class="specimen-identity">
+            <p class="specimen-category" aria-hidden="true">APK · Android</p>
+            <h3 id="specimen-title" class="specimen-name">Lichen Dreams</h3>
+            <p id="specimen-version" class="specimen-version"></p>
+          </header>
+          
+          <!-- Primary CTA -->
+          <div class="specimen-action">
+            <a id="specimen-download-btn" class="btn-download btn-specimen" href="#" download aria-label="Descargar Lichen Dreams APK">
+              <span class="btn-specimen-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              </span>
+              <span class="btn-specimen-label">Descargar APK</span>
+              <span class="btn-specimen-size" aria-hidden="true"></span>
+            </a>
+          </div>
+          
+          <!-- Verification hash -->
+          <div class="specimen-verification" aria-label="Verificación de integridad">
+            <span class="specimen-verify-label">SHA-256</span>
+            <code id="specimen-sha256" class="specimen-hash"></code>
+            <button type="button" class="specimen-copy-btn" aria-label="Copiar hash SHA-256" data-copy-target="#specimen-sha256">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            </button>
+          </div>
+        </div>
+      </article>
     </div>
-    <div class="download-grid">
-      <div id="download-card" class="ld-card download-card-main reveal"></div>
-      <div id="download-sidebar" class="download-sidebar reveal"></div>
+
+    <!-- Field Data Grid -->
+    <div id="field-data" class="field-data reveal" aria-labelledby="field-data-heading">
+      <h3 id="field-data-heading" class="field-section-title">DATOS DE LA VERSIÓN</h3>
+      <dl class="field-data-grid">
+        <div class="field-data-item">
+          <dt class="field-data-label">Tamaño</dt>
+          <dd id="field-size" class="field-data-value"></dd>
+        </div>
+        <div class="field-data-item">
+          <dt class="field-data-label">Build</dt>
+          <dd id="field-build" class="field-data-value"></dd>
+        </div>
+        <div class="field-data-item">
+          <dt class="field-data-label">Fecha</dt>
+          <dd id="field-date" class="field-data-value"></dd>
+        </div>
+        <div class="field-data-item">
+          <dt class="field-data-label">Compatibilidad</dt>
+          <dd id="field-compat" class="field-data-value">Android 8.0+ (Oreo)</dd>
+        </div>
+      </dl>
     </div>
+
+    <!-- Field Notes (Changelog) -->
+    <section id="field-notes" class="field-notes reveal" aria-labelledby="field-notes-heading">
+      <h3 id="field-notes-heading" class="field-section-title">NOVEDADES DE ESTA VERSIÓN</h3>
+      <ul id="field-changelog" class="field-changelog" aria-label="Cambios en esta versión"></ul>
+    </section>
+
+    <!-- Previous Specimens -->
+    <section id="previous-specimens" class="previous-specimens reveal" aria-labelledby="previous-heading">
+      <div class="previous-header">
+        <h3 id="previous-heading" class="field-section-title">VERSIONES ANTERIORES</h3>
+        <a href="#historial" class="previous-link" aria-label="Ver historial completo de versiones">
+          Ver historial completo
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </a>
+      </div>
+      <ul id="previous-list" class="previous-list" aria-label="Versiones anteriores"></ul>
+    </section>
   </section>
 
 <!-- ¿QUÉ ES LICHEN DREAMS? -->
@@ -181,8 +294,6 @@ tailwind.config = {
     <p>Una mirada a la interfaz y funciones de Lichen Dreams.</p>
   </div>
   <div id="gallery-grid" class="gallery-grid"></div>
-  <!-- Gallery decorative SVG -->
-  <img class="gallery-decor gallery-decor-texture" src="./assets/svg/lichen-texture.svg" alt="" aria-hidden="true">
 </section>
 
 <!-- CÓMO FUNCIONA -->
@@ -198,19 +309,6 @@ tailwind.config = {
   <img class="how-decor how-decor-microscope" src="./assets/svg/lichen-microscope.svg" alt="" aria-hidden="true">
   <img class="how-decor how-decor-growth" src="./assets/svg/lichen-growth.svg" alt="" aria-hidden="true">
   <img class="how-decor how-decor-rock" src="./assets/svg/lichen-rock.svg" alt="" aria-hidden="true">
-</section>
-
-<!-- VERSIÓN ACTUAL -->
-<section id="version" class="section" aria-labelledby="version-heading">
-  <div class="section-heading reveal">
-    <p class="section-label">Lanzamiento</p>
-    <h2 id="version-heading">Versión actual</h2>
-    <p>Detalles de la versión actual del proyecto.</p>
-  </div>
-  <div id="version-hero" class="reveal"></div>
-  <!-- Version decorative SVGs -->
-  <img class="version-decor version-decor-branch" src="./assets/svg/lichen-branch-detail.svg" alt="" aria-hidden="true">
-  <img class="version-decor version-decor-rosette" src="./assets/svg/lichen-rosette.svg" alt="" aria-hidden="true">
 </section>
 
 <!-- HISTORIAL -->
@@ -233,8 +331,6 @@ tailwind.config = {
     <p>Respuestas a las consultas más comunes sobre Lichen Dreams.</p>
   </div>
   <div id="faq-grid" class="faq-grid"></div>
-  <!-- FAQ decorative SVG -->
-  <img class="faq-decor faq-decor-texture" src="./assets/svg/lichen-texture.svg" alt="" aria-hidden="true">
 </section>
 
 </main>
@@ -267,7 +363,6 @@ tailwind.config = {
         <p style="font-weight:700;font-size:12px;color:var(--ld-ink);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px;">Descarga</p>
         <div class="footer-nav">
           <a href="#download">Descargar APK</a>
-          <a href="#version">Versión actual</a>
           <a href="#historial">Versiones anteriores</a>
           <a href="#download">Android</a>
         </div>
@@ -278,10 +373,7 @@ tailwind.config = {
       <a href="https://github.com/HeidyVivas/Qr_Lichen-Dreams" target="_blank" rel="noopener">Código en GitHub ↗</a>
     </div>
   </div>
-  <!-- Footer decorative SVGs -->
-  <img class="footer-decor footer-decor-rock" src="./assets/svg/lichen-rock.svg" alt="" aria-hidden="true">
-  <img class="footer-decor footer-decor-branch" src="./assets/svg/lichen-branch-detail.svg" alt="" aria-hidden="true">
-</footer>
+  </footer>
 
 <!-- Scripts en orden de dependencia -->
 <script src="./js/versions.js"></script>

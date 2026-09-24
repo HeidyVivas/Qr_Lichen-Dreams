@@ -8,16 +8,86 @@
 
 const UI = {
 
+  STORAGE_KEY_DOWNLOADED: 'ld-last-downloaded',
+
+  /**
+   * Compara dos versiones semver (major.minor.patch)
+   * Retorna: -1 si a < b, 0 si a === b, 1 si a > b
+   */
+  compareSemver(a, b) {
+    const pa = a.split('.').map(n => parseInt(n, 10) || 0);
+    const pb = b.split('.').map(n => parseInt(n, 10) || 0);
+    for (let i = 0; i < 3; i++) {
+      if (pa[i] !== pb[i]) return pa[i] < pb[i] ? -1 : 1;
+    }
+    return 0;
+  },
+
+  /**
+   * Determina el texto y aria-label del botón según versión descargada
+   */
+  getDownloadButtonState(latestVersion) {
+    const downloaded = localStorage.getItem(this.STORAGE_KEY_DOWNLOADED);
+    if (!downloaded) {
+      return {
+        text: 'Instalar',
+        aria: `Descargar Lichen Dreams v${latestVersion} APK`
+      };
+    }
+    const cmp = this.compareSemver(downloaded, latestVersion);
+    if (cmp < 0) {
+      return {
+        text: 'Actualizar disponible',
+        aria: `Actualizar Lichen Dreams a v${latestVersion} (tienes v${downloaded} descargada)`
+      };
+    }
+    if (cmp === 0) {
+      return {
+        text: 'Actualizar (ya descargado)',
+        aria: `Reinstalar Lichen Dreams v${latestVersion} (ya descargada)`
+      };
+    }
+    return {
+      text: 'Versión posterior descargada',
+      aria: `Tienes v${downloaded} descargada, más nueva que v${latestVersion}`
+    };
+  },
+
+  /**
+   * Aplica el estado del botón a un elemento <a> de descarga
+   */
+  applyDownloadButtonState(btn, latestVersion) {
+    if (!btn) return;
+    const state = this.getDownloadButtonState(latestVersion);
+    // Specimen button uses .btn-specimen-label span
+    const labelEl = btn.querySelector('.btn-specimen-label');
+    if (labelEl) {
+      labelEl.textContent = state.text;
+    } else {
+      // Hero button: direct text node (first child after <i>)
+      const textNode = Array.from(btn.childNodes).find(n => n.nodeType === Node.TEXT_NODE && n.textContent.trim());
+      if (textNode) textNode.textContent = ' ' + state.text;
+    }
+    btn.setAttribute('aria-label', state.aria);
+  },
+
+  /**
+   * Marca la versión como descargada en localStorage
+   */
+  markVersionDownloaded(version) {
+    localStorage.setItem(this.STORAGE_KEY_DOWNLOADED, version);
+  },
+
   async renderAll() {
     await this.renderHero();
     await this.renderFeatures();
     this.renderGallery();
     this.renderHowItWorks();
     await this.renderDownload();
-    await this.renderVersionHero();
     await this.renderHistory();
     this.renderFAQ();
     this.renderFooter();
+    this.initLightbox();
     this.createIcons();
   },
 
@@ -37,40 +107,35 @@ const UI = {
 
   /* ═══════════════════════════════ HERO */
   async renderHero() {
-    const el = document.getElementById('hero-content');
-    if (!el) return;
     const v = await VersionService.getLatest();
-const badges = v ? `
-        <div class="hero-badges" style="margin-top:20px;">
-          <span class="badge badge-accent"><span class="badge-dot"></span>Android</span>
-          <span class="badge badge-neutral">v${v.version}</span>
-          ${v.build ? `<span class="badge badge-neutral">Build ${v.build}</span>` : ''}
-        </div>
-      ` : '';
-    el.innerHTML = `
-      <p class="eyebrow hero-animate">Android · Sitio oficial</p>
-      <h1 class="hero-animate" style="font-family:'Fraunces',Georgia,serif;font-size:clamp(42px,10vw,68px);line-height:1.05;letter-spacing:-0.02em;margin-bottom:12px;font-weight:500;">Lichen Dreams</h1>
-      <p class="tagline hero-animate">Lee el aire, entiende tu entorno.</p>
-      <p class="hero-animate" style="color:var(--ld-ink-soft);font-size:15px;max-width:40ch;margin:16px auto 0;">Analiza líquenes con IA para evaluar la calidad del aire. Comparte tus observaciones en el mapa ambiental comunitario.</p>
-      ${badges}
-      <div class="hero-meta-row hero-animate" style="margin-top:18px;color:var(--ld-ink-muted);font-size:13px;">
-        <span style="display:inline-flex;align-items:center;gap:5px;"><i data-lucide="smartphone" style="width:13px;height:13px;"></i>Android</span>
-        ${v && v.size ? '<span style="opacity:0.3;">·</span><span>' + v.size + '</span>' : ''}
-      </div>
-      <div class="hero-actions hero-animate" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;">
-        <a class="btn-download" href="${v ? v.url : '#'}" download aria-label="Descargar Lichen Dreams v${v ? v.version : ''} APK" style="max-width:260px;">
-          <i data-lucide="download"></i>
-          Descargar APK
-        </a>
-        <a class="btn-secondary" href="#historial" aria-label="Explorar historial de versiones" style="max-width:200px;">
-          <i data-lucide="clock"></i>
-          Historial
-        </a>
-      </div>
-      <div class="hero-animate" style="margin-top:16px;">
-        <span class="float-badge"><i data-lucide="download"></i> Descarga directa</span>
-      </div>
-    `;
+    if (!v) return;
+
+    // Hydrate dynamic badges
+    const badgesEl = document.getElementById('hero-badges');
+    if (badgesEl) {
+      badgesEl.innerHTML = `
+        <span class="badge badge-accent"><span class="badge-dot"></span>Android</span>
+        <span class="badge badge-neutral">v${v.version}</span>
+        ${v.build ? `<span class="badge badge-neutral">Build ${v.build}</span>` : ''}
+      `;
+    }
+
+    // Hydrate size meta
+    const sizeEl = document.getElementById('hero-size-value');
+    const sizeSepEl = document.getElementById('hero-size');
+    if (sizeEl && v.size) {
+      sizeEl.textContent = v.size;
+      if (sizeSepEl) sizeSepEl.style.display = 'inline';
+    } else if (sizeSepEl) {
+      sizeSepEl.style.display = 'none';
+    }
+
+    // Hydrate download button
+    const downloadBtn = document.getElementById('hero-download-btn');
+    if (downloadBtn) {
+      downloadBtn.href = v.url || '#';
+      downloadBtn.setAttribute('aria-label', `Descargar Lichen Dreams v${v.version} APK`);
+    }
   },
 
   /* ═══════════════════════════════ FEATURES */
@@ -78,7 +143,7 @@ const badges = v ? `
     const container = document.getElementById('features-grid');
     if (!container) return;
     const features = [
-      { icon: 'camera', title: 'Analizar líquenes', desc: 'Cámara o galería para analizar el estado del líquen mediante IA.' },
+      { icon: 'camera', title: 'Analizar líquenes', desc: 'Cámara o galería para analizar el estado del líquen mediante IA.', featured: true },
       { icon: 'map', title: 'Mapa ambiental', desc: 'Observaciones georreferenciadas propias y de la comunidad, con zonas de transición.' },
       { icon: 'book-open', title: 'Lichenpedia', desc: 'Artículos educativos sobre líquenes y bioindicación.' },
       { icon: 'history', title: 'Historial', desc: 'Consulta tus análisis, filtros, estadísticas y perfil ambiental.' },
@@ -87,8 +152,10 @@ const badges = v ? `
       { icon: 'settings', title: 'Configuración', desc: 'Gestiona cuenta, privacidad, notificaciones, apariencia y opciones de la aplicación.' },
       { icon: 'folder', title: 'Catálogos', desc: 'Consulta especies y recursos ambientales disponibles en la aplicación.' }
     ];
-    container.innerHTML = features.map(function(f) {
-      return '<div class="feature-card reveal">' +
+    container.innerHTML = features.map(function(f, i) {
+      const featuredClass = f.featured ? ' featured' : '';
+      const delayStyle = ' style="transition-delay:' + (i * 60) + 'ms;"';
+      return '<div class="feature-card reveal' + featuredClass + '"' + delayStyle + '>' +
         '<div class="feature-icon"><i data-lucide="' + f.icon + '"></i></div>' +
         '<h3>' + f.title + '</h3>' +
         '<p>' + f.desc + '</p>' +
@@ -118,10 +185,16 @@ const badges = v ? `
           '<div class="phone-mockup-frame">' +
             '<div class="phone-mockup-notch"></div>' +
             '<div class="phone-mockup-screen">' +
+              '<div class="phone-mockup-loader" aria-hidden="true"></div>' +
               '<img class="phone-mockup-image" src="./assets/screenshots/' + s.file + '" alt="' + s.title + '" loading="lazy">' +
               '<div class="phone-mockup-placeholder">' +
                 '<span class="placeholder-label">Captura ' + String(s.id).padStart(2, '0') + '</span>' +
-                '<span class="placeholder-hint">Reemplaza esta imagen por una captura real</span>' +
+                '<span class="placeholder-hint">Cargando captura&hellip;</span>' +
+              '</div>' +
+              '<div class="phone-mockup-error" hidden>' +
+                '<i data-lucide="image-off" style="width:32px;height:32px;color:var(--ld-ink-faint);margin-bottom:8px;"></i>' +
+                '<span class="placeholder-label">Imagen no disponible</span>' +
+                '<span class="placeholder-hint">No se pudo cargar la captura</span>' +
               '</div>' +
             '</div>' +
           '</div>' +
@@ -133,19 +206,29 @@ const badges = v ? `
       '</div>';
     }).join('');
 
-    this.createIcons();
-
     // Handle image loading for gallery mockups
     const images = container.querySelectorAll('.phone-mockup-image');
     images.forEach(function(img) {
-      if (img.complete) {
+      const card = img.closest('.gallery-phone-card');
+      const loader = card?.querySelector('.phone-mockup-loader');
+      const placeholder = card?.querySelector('.phone-mockup-placeholder');
+      const errorEl = card?.querySelector('.phone-mockup-error');
+
+      if (img.complete && img.naturalWidth > 0) {
         img.classList.add('loaded');
+        if (loader) loader.style.display = 'none';
+        if (placeholder) { placeholder.style.opacity = '0'; placeholder.style.visibility = 'hidden'; }
       } else {
         img.addEventListener('load', function() {
           this.classList.add('loaded');
+          if (loader) loader.style.display = 'none';
+          if (placeholder) { placeholder.style.opacity = '0'; placeholder.style.visibility = 'hidden'; }
         });
         img.addEventListener('error', function() {
           this.style.display = 'none';
+          if (loader) loader.style.display = 'none';
+          if (placeholder) placeholder.style.display = 'none';
+          if (errorEl) errorEl.hidden = false;
         });
       }
     });
@@ -175,94 +258,126 @@ const badges = v ? `
 
   /* ═══════════════════════════════ DOWNLOAD */
   async renderDownload() {
-    /* Main download card */
-    const main = document.getElementById('download-card');
-    if (main) {
-      const v = await VersionService.getLatest();
-      const sizeText = v && v.size ? v.size : 'Tamaño se publicará en el release';
-      main.innerHTML =
-        '<img class="download-logo" src="./assets/images/icon.png" alt="Icono de la aplicación Lichen Dreams" aria-hidden="true" width="80" height="80">' +
-        '<p class="text-center" style="font-size:clamp(22px,5vw,30px);font-family:Fraunces,serif;font-weight:500;margin-bottom:4px;">Lichen Dreams</p>' +
-        '<p class="text-center" style="color:var(--ld-ink-muted);font-size:14px;margin-bottom:20px;">v' + (v ? v.version : '1.2.0') + (v && v.build ? ' · Build ' + v.build : '') + ' · Android</p>' +
-        '<a class="btn-download" href="' + (v ? v.url : '#') + '" download aria-label="Descargar Lichen Dreams v' + (v ? v.version : '1.2.0') + ' APK">' +
-          '<i data-lucide="download"></i>' +
-          'Descargar APK' +
-        '</a>' +
-        '<div class="download-meta" style="justify-content:center;margin-top:16px;">' +
-          '<span>v' + (v ? v.version : '1.2.0') + '</span>' +
-          '<span style="opacity:0.35;">·</span>' +
-          (v && v.build ? '<span>Build ' + v.build + '</span><span style="opacity:0.35;">·</span>' : '') +
-          '<span>APK</span>' +
-        '</div>';
-    }
-
-    /* Sidebar metadata */
-    const sidebar = document.getElementById('download-sidebar');
-    if (sidebar) {
-      const v = await VersionService.getLatest();
-      sidebar.innerHTML =
-        '<div class="ld-card download-meta-card">' +
-          '<p class="download-meta-label">Versión actual</p>' +
-          '<p class="download-meta-value">v' + (v ? v.version : '1.2.0') + '</p>' +
-          (v && v.build ? '<p class="download-meta-sub">Build ' + v.build + '</p>' : '') +
-        '</div>' +
-        '<div class="ld-card download-meta-card">' +
-          '<p class="download-meta-label">Estado</p>' +
-          '<p class="download-meta-value" style="display:flex;align-items:center;gap:6px;"><span class="status-dot"></span> Disponible</p>' +
-          '<p class="download-meta-sub">APK listo para descargar</p>' +
-        '</div>' +
-        '<div class="ld-card download-meta-card">' +
-          '<p class="download-meta-label">Formato</p>' +
-          '<p class="download-meta-value">Android APK</p>' +
-          '<p class="download-meta-sub">Paquete de instalación</p>' +
-        '</div>' +
-        '<div class="ld-card download-meta-card">' +
-          '<p class="download-meta-label">Tamaño</p>' +
-          '<p class="download-meta-value">' + (v && v.size ? v.size : 'Se publicará en el release') + '</p>' +
-          '<p class="download-meta-sub">Tamaño del APK firmado</p>' +
-        '</div>' +
-        '<div class="ld-card download-meta-card">' +
-          '<p class="download-meta-label">SHA-256</p>' +
-          '<p class="download-meta-value" style="font-size:11px;word-break:break-all;">' + (v && v.sha256 ? v.sha256 : 'Se publicará en el release') + '</p>' +
-          '<p class="download-meta-sub">Hash del APK firmado</p>' +
-        '</div>';
-    }
-  },
-
-  /* ═══════════════════════════════ VERSION HERO */
-  async renderVersionHero() {
-    const container = document.getElementById('version-hero');
-    if (!container) return;
     const v = await VersionService.getLatest();
-    if (!v) {
-      container.innerHTML = '<p class="empty-note">Todavía no hay versiones publicadas.</p>';
-      return;
+    if (!v) return;
+
+    /* Header meta: version · build · size · compatibility */
+    const headerMeta = document.querySelector('.download-header-meta');
+    if (headerMeta) {
+      const parts = [`v${v.version}`];
+      if (v.build) parts.push(`Build ${v.build}`);
+      if (v.size) parts.push(v.size);
+      parts.push('Android 8.0+');
+      headerMeta.textContent = parts.join(' · ');
     }
-    container.innerHTML =
-      '<div class="version-hero">' +
-        '<div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(196,224,148,0.2),transparent);"></div>' +
-        '<div class="version-hero-row">' +
-          '<img src="./assets/images/icon.png" alt="Icono de Lichen Dreams" style="width:52px;height:52px;border-radius:14px;object-fit:cover;box-shadow:0 6px 20px -4px rgba(78,91,74,0.4);">' +
-          '<div>' +
-            '<p style="font-family:Fraunces,serif;font-size:clamp(24px,5vw,32px);font-weight:500;margin:0;">Lichen Dreams</p>' +
-            '<p style="color:var(--ld-ink-muted);margin:0;">v' + v.version + (v.build ? ' · Build ' + v.build : '') + '</p>' +
-          '</div>' +
-          '<div style="margin-left:auto;">' +
-            '<span class="badge badge-accent"><span class="badge-dot"></span>Actual</span>' +
-          '</div>' +
-        '</div>' +
-        '<div class="version-hero-meta">' +
-          '<span style="display:inline-flex;align-items:center;gap:5px;color:var(--ld-ink-muted);font-size:13px;"><i data-lucide="smartphone" style="width:13px;height:13px;"></i>Android</span>' +
-          '<span style="display:inline-flex;align-items:center;gap:5px;color:var(--ld-ink-muted);font-size:13px;"><i data-lucide="package" style="width:13px;height:13px;"></i>APK</span>' +
-          '<span style="display:inline-flex;align-items:center;gap:5px;color:var(--ld-ink-muted);font-size:13px;"><i data-lucide="hash" style="width:13px;height:13px;"></i>v' + v.version + '</span>' +
-        '</div>' +
-        '<p style="color:var(--ld-ink-soft);font-size:14px;line-height:1.5;max-width:560px;margin:20px 0 24px;">Versión actual del proyecto según la configuración de compilación de Lichen Dreams.</p>' +
-        '<div style="display:flex;flex-wrap:wrap;gap:10px;">' +
-          '<a class="btn-download" href="' + v.url + '" download aria-label="Descargar versión ' + v.version + '" style="max-width:280px;">' +
-            '<i data-lucide="download"></i> Descargar APK' +
-          '</a>' +
-        '</div>' +
-      '</div>';
+
+    /* Specimen Card */
+    const specimenIcon = document.getElementById('specimen-icon');
+    if (specimenIcon) {
+      specimenIcon.src = './assets/images/icon.png';
+      specimenIcon.alt = '';
+    }
+
+    const specimenName = document.getElementById('specimen-title');
+    if (specimenName) specimenName.textContent = 'Lichen Dreams';
+
+    const specimenVersion = document.getElementById('specimen-version');
+    if (specimenVersion) {
+      specimenVersion.textContent = `Versión ${v.version}${v.build ? ` · Build ${v.build}` : ''}`;
+    }
+
+    /* Primary download button - specimen card */
+    const downloadBtn = document.getElementById('specimen-download-btn');
+    if (downloadBtn) {
+      downloadBtn.href = v.url || '#';
+      this.applyDownloadButtonState(downloadBtn, v.version);
+      /* Mark as downloaded on click */
+      downloadBtn.addEventListener('click', () => this.markVersionDownloaded(v.version), { once: true });
+    }
+
+    const btnSize = document.querySelector('.btn-specimen-size');
+    if (btnSize && v.size) {
+      btnSize.textContent = v.size;
+    }
+
+    /* Hero download button - also update its state */
+    const heroDownloadBtn = document.getElementById('hero-download-btn');
+    if (heroDownloadBtn) {
+      heroDownloadBtn.href = v.url || '#';
+      this.applyDownloadButtonState(heroDownloadBtn, v.version);
+      heroDownloadBtn.addEventListener('click', () => this.markVersionDownloaded(v.version), { once: true });
+    }
+
+    /* SHA-256 hash */
+    const sha256El = document.getElementById('specimen-sha256');
+    if (sha256El) {
+      sha256El.textContent = v.sha256 || '—';
+    }
+
+    /* Copy hash button */
+    const copyBtn = document.querySelector('.specimen-copy-btn');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', () => {
+        const hash = sha256El?.textContent?.trim();
+        if (hash && hash !== '—') {
+          navigator.clipboard.writeText(hash).then(() => {
+            copyBtn.classList.add('copied');
+            copyBtn.setAttribute('aria-label', 'Copiado');
+            setTimeout(() => {
+              copyBtn.classList.remove('copied');
+              copyBtn.setAttribute('aria-label', 'Copiar hash SHA-256');
+            }, 2000);
+          });
+        }
+      });
+    }
+
+    /* Field Data */
+    const fieldSize = document.getElementById('field-size');
+    if (fieldSize) fieldSize.textContent = v.size || '—';
+
+    const fieldBuild = document.getElementById('field-build');
+    if (fieldBuild) fieldBuild.textContent = v.build ? `Build ${v.build}` : '—';
+
+    const fieldDate = document.getElementById('field-date');
+    if (fieldDate && v.date) {
+      fieldDate.textContent = this.formatDate(v.date);
+    }
+
+    /* Field Notes / Changelog */
+    const changelogList = document.getElementById('field-changelog');
+    if (changelogList && v.changelog && v.changelog.length > 0) {
+      changelogList.innerHTML = v.changelog.map(item =>
+        `<li><span class="field-changelog-dot" aria-hidden="true"></span><span>${item}</span></li>`
+      ).join('');
+    } else if (changelogList) {
+      changelogList.innerHTML = '<li class="field-changelog-empty">Sin novedades registradas</li>';
+    }
+
+    /* Previous Specimens */
+    const previousVersions = await VersionService.getPrevious();
+    const previousList = document.getElementById('previous-list');
+    if (previousList && previousVersions.length > 0) {
+      // Show up to 3 previous versions
+      const displayVersions = previousVersions.slice(0, 3);
+      previousList.innerHTML = displayVersions.map(pv => {
+        const dateStr = pv.date ? this.formatDate(pv.date) : '';
+        const sizeStr = pv.size || '';
+        return `
+          <li class="previous-item">
+            <a href="${pv.url}" download class="previous-item-link" aria-label="Descargar versión ${pv.version}">
+              <div class="previous-item-main">
+                <span class="previous-item-version">v${pv.version}</span>
+                <span class="previous-item-meta">${[sizeStr, dateStr].filter(Boolean).join(' · ')}</span>
+              </div>
+              <svg class="previous-item-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+          </li>
+        `;
+      }).join('');
+    } else if (previousList) {
+      previousList.innerHTML = '<li class="previous-empty">No hay especímenes anteriores registrados</li>';
+    }
   },
 
   /* ═══════════════════════════════ HISTORY */
@@ -300,7 +415,6 @@ const badges = v ? `
         '</div>' +
       '</details>';
     }).join('');
-    this.createIcons();
   },
 
   /* ═══════════════════════════════ FAQ */
@@ -322,15 +436,15 @@ const badges = v ? `
       },
       {
         q: '¿Qué versión de Android necesito?',
-        a: 'La información se publicará cuando se verifique directamente el archivo de configuración de compilación de Android.'
+        a: 'Android 8.0 (Oreo) o superior. La aplicación requiere permisos de cámara, almacenamiento y ubicación para funcionar correctamente.'
       },
       {
         q: '¿Dónde veo la versión actual?',
-        a: 'La versión actual aparece en las secciones Descargar y Versión actual.'
+        a: 'La versión actual, su changelog y el botón de descarga están en la sección <strong>Descargar</strong>.'
       },
       {
         q: '¿Puedo instalar una versión anterior?',
-        a: 'Solo cuando existan releases anteriores publicados oficialmente.'
+        a: 'Sí, el historial de versiones está disponible en la sección <strong>Historial</strong>. Cada versión incluye su changelog y enlace de descarga.'
       },
       {
         q: '¿Qué significan los resultados?',
@@ -342,11 +456,11 @@ const badges = v ? `
       },
       {
         q: '¿Requiere cuenta?',
-        a: 'Sí, las funciones de cuenta, historial y participación comunitaria utilizan autenticación.'
+        a: 'Sí, las funciones de historial, mapa comunitario y notificaciones requieren autenticación. El análisis básico puede usarse sin cuenta.'
       },
       {
-        q: '¿Funciona offline?',
-        a: 'Algunas funciones locales pueden utilizarse sin conexión, pero el análisis con IA y las funciones que requieren datos remotos necesitan conexión a Internet.'
+        q: '¿Funciona sin conexión?',
+        a: 'El análisis con IA y el mapa comunitario requieren conexión a Internet. El historial local y la Lichenpedia cachés están disponibles offline.'
       }
     ];
     container.innerHTML = faqs.map(function(f) {
@@ -365,5 +479,104 @@ const badges = v ? `
     const year = document.getElementById('year');
     if (year) year.textContent = new Date().getFullYear().toString();
     /* Footer is static HTML, year is the only dynamic element */
+  },
+
+  /* ═══════════════════════════════ LIGHTBOX */
+  initLightbox() {
+    const gallery = document.getElementById('gallery-grid');
+    if (!gallery) return;
+
+    // Create lightbox elements
+    const lightbox = document.createElement('div');
+    lightbox.className = 'gallery-lightbox';
+    lightbox.hidden = true;
+    lightbox.innerHTML = `
+      <div class="lightbox-backdrop" aria-hidden="true"></div>
+      <div class="lightbox-content" role="dialog" aria-modal="true" aria-label="Vista ampliada de captura">
+        <button class="lightbox-close" aria-label="Cerrar vista ampliada"><i data-lucide="x"></i></button>
+        <button class="lightbox-prev" aria-label="Anterior"><i data-lucide="chevron-left"></i></button>
+        <button class="lightbox-next" aria-label="Siguiente"><i data-lucide="chevron-right"></i></button>
+        <div class="lightbox-frame">
+          <img class="lightbox-image" src="" alt="">
+        </div>
+        <div class="lightbox-caption">
+          <h3 class="lightbox-title"></h3>
+          <p class="lightbox-desc"></p>
+        </div>
+        <div class="lightbox-counter"></div>
+      </div>
+    `;
+    document.body.appendChild(lightbox);
+
+    const lbImage = lightbox.querySelector('.lightbox-image');
+    const lbTitle = lightbox.querySelector('.lightbox-title');
+    const lbDesc = lightbox.querySelector('.lightbox-desc');
+    const lbCounter = lightbox.querySelector('.lightbox-counter');
+    const lbClose = lightbox.querySelector('.lightbox-close');
+    const lbPrev = lightbox.querySelector('.lightbox-prev');
+    const lbNext = lightbox.querySelector('.lightbox-next');
+    const lbBackdrop = lightbox.querySelector('.lightbox-backdrop');
+
+    let currentIndex = 0;
+    const screens = [
+      { file: 'dashboard.jpeg', title: 'Dashboard', desc: 'Vista principal con estadísticas, artículos destacados y acceso rápido al análisis.' },
+      { file: 'analizar.jpeg', title: 'Análisis', desc: 'Captura o selecciona una imagen, elige una especie opcionalmente y envíala al análisis con IA.' },
+      { file: 'camara.jpeg', title: 'Cámara', desc: 'Cámara para fotografiar líquenes con geolocalización automática.' },
+      { file: 'resultado.jpeg', title: 'Resultado', desc: 'Estado del líquen, significado ambiental, recomendación y opciones para compartir o explorar el resultado.' },
+      { file: 'mapa.jpeg', title: 'Mapa ambiental', desc: 'Observaciones georreferenciadas, zonas de transición y filtros ambientales.' },
+      { file: 'perfil.jpeg', title: 'Perfil', desc: 'Gestión de información personal y foto de perfil.' },
+      { file: 'liquenpedia.jpeg', title: 'Lichenpedia', desc: 'Artículos educativos sobre líquenes y bioindicación, con búsqueda y categorías.' },
+      { file: 'historial.jpeg', title: 'Historial', desc: 'Bitácora de análisis con filtros, búsqueda, estadísticas y perfil ambiental.' }
+    ];
+
+    const show = (index) => {
+      currentIndex = index;
+      const s = screens[index];
+      lbImage.src = './assets/screenshots/' + s.file;
+      lbImage.alt = s.title;
+      lbTitle.textContent = s.title;
+      lbDesc.textContent = s.desc;
+      lbCounter.textContent = (index + 1) + ' / ' + screens.length;
+      lightbox.hidden = false;
+      document.body.style.overflow = 'hidden';
+      requestAnimationFrame(() => lightbox.classList.add('open'));
+    };
+
+    const hide = () => {
+      lightbox.classList.remove('open');
+      setTimeout(() => {
+        lightbox.hidden = true;
+        document.body.style.overflow = '';
+      }, 300);
+    };
+
+    const navigate = (dir) => {
+      currentIndex = (currentIndex + dir + screens.length) % screens.length;
+      show(currentIndex);
+    };
+
+    // Event delegation for gallery images
+    gallery.addEventListener('click', (e) => {
+      const card = e.target.closest('.gallery-phone-card');
+      if (!card) return;
+      const img = card.querySelector('.phone-mockup-image');
+      if (!img || !img.classList.contains('loaded')) return;
+      const index = Array.from(gallery.children).indexOf(card);
+      if (index >= 0) show(index);
+    });
+
+    lbClose.addEventListener('click', hide);
+    lbBackdrop.addEventListener('click', hide);
+    lbPrev.addEventListener('click', () => navigate(-1));
+    lbNext.addEventListener('click', () => navigate(1));
+
+    document.addEventListener('keydown', (e) => {
+      if (lightbox.hidden) return;
+      if (e.key === 'Escape') hide();
+      if (e.key === 'ArrowLeft') navigate(-1);
+      if (e.key === 'ArrowRight') navigate(1);
+    });
+
+    this.createIcons();
   }
 };

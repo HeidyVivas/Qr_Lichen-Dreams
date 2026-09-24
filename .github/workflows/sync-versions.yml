@@ -4,6 +4,8 @@ on:
   release:
     types: [published]
   workflow_dispatch:
+  repository_dispatch:
+    types: [new-release]
 
 permissions:
   contents: write
@@ -39,14 +41,16 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add docs/js/versions.js
-          git commit -m "chore: sync versions from release ${{ github.event.release.tag_name || 'manual' }}"
+          TAG="${{ github.event.release.tag_name || github.event.client_payload.tag || 'manual' }}"
+          git commit -m "chore: sync versions from release $TAG"
           git push
 
       - name: Summary
         run: |
           echo "## Sync Versions Summary" >> $GITHUB_STEP_SUMMARY
           echo "- Trigger: ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
-          echo "- Release: ${{ github.event.release.tag_name || 'manual dispatch' }}" >> $GITHUB_STEP_SUMMARY
+          TAG="${{ github.event.release.tag_name || github.event.client_payload.tag || 'manual dispatch' }}"
+          echo "- Release: $TAG" >> $GITHUB_STEP_SUMMARY
           echo "- Changed: ${{ steps.generate.outputs.changed }}" >> $GITHUB_STEP_SUMMARY
           echo "- Versions synced: ${{ steps.generate.outputs.count }}" >> $GITHUB_STEP_SUMMARY
           echo "- Latest: ${{ steps.generate.outputs.latest }}" >> $GITHUB_STEP_SUMMARY
