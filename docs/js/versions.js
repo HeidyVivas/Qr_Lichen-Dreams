@@ -1,7 +1,7 @@
 /**
  * Versions Data Layer
  * ====================
- * Fuente de datos centralizada. Actualmente usa datos embebidos.
+ * Fuente de datos centralizada. Generado automáticamente desde GitHub Releases.
  * Para cambiar la fuente (JSON local, GitHub Releases API),
  * solo modifica las funciones dentro de VersionService.
  * La UI nunca accede directamente a VERSIONS.
@@ -9,17 +9,26 @@
 
 const VERSIONS = [
   {
+    version: "1.2.1",
+    build: null,
+    date: "2026-09-24",
+    size: "71.1 MB",
+    sha256: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    url: "https://github.com/HeidyVivas/Qr_Lichen-Dreams/releases/download/v1.2.1/Lichen_Dreams_v1.2.1.apk",
+    changelog: []
+  },
+  {
     version: "1.2.0",
     build: 3,
     date: "2026-09-21",
-    size: "71.0 MB",
-    sha256: "f71395f1d17a23afc5914544c3f994e042197cadff7870179dd513d2cf7e2f94",
+    size: "71.1 MB",
+    sha256: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     url: "https://github.com/HeidyVivas/Qr_Lichen-Dreams/releases/download/v1.2.0/Lichen_Dreams_v1.2.0.apk",
     changelog: [
-      "Mejoras en la cámara y control de zoom",
-      "Mejoras de estabilidad y rendimiento",
-      "Correcciones generales",
-      "Mejoras en la experiencia de usuario"
+      "Mejoras en la cámara y control de zoom.",
+      "Mejoras de estabilidad y rendimiento.",
+      "Correcciones generales.",
+      "Mejoras en la experiencia de usuario."
     ]
   },
   {
@@ -27,12 +36,12 @@ const VERSIONS = [
     build: null,
     date: "2026-09-21",
     size: "72.3 MB",
-    sha256: "9dbad155571d05ff852ffbf811e6f61292572dba426fa06f33d305a7c025ed84",
+    sha256: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     url: "https://github.com/HeidyVivas/Qr_Lichen-Dreams/releases/download/v1.1.0/Lichen_Dreams_v1.1.0.apk",
     changelog: [
-      "Mejoras y correcciones generales",
-      "Mejoras de estabilidad y rendimiento",
-      "Mejoras en la experiencia de usuario"
+      "Mejoras y correcciones generales.",
+      "Mejoras de estabilidad y rendimiento.",
+      "Mejoras en la experiencia de usuario."
     ]
   },
   {
@@ -40,11 +49,11 @@ const VERSIONS = [
     build: null,
     date: "2026-09-21",
     size: "72.2 MB",
-    sha256: "2f356353cda0deb8440ce37a6088431b05194942fffaa8bddf98d3b68bbad411",
+    sha256: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     url: "https://github.com/HeidyVivas/Qr_Lichen-Dreams/releases/download/v1.0.3/Lichen_Dreams_v1.0.3.apk",
     changelog: [
-      "Mejoras y correcciones generales",
-      "Mejoras de estabilidad de la aplicación"
+      "Mejoras y correcciones generales.",
+      "Mejoras de estabilidad de la aplicación."
     ]
   },
   {
@@ -52,11 +61,11 @@ const VERSIONS = [
     build: null,
     date: "2026-09-21",
     size: "72.0 MB",
-    sha256: "3cfde165a72055cdc5ea138503ce17ac23abf2f1322a19173089560df713eaa1",
+    sha256: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     url: "https://github.com/HeidyVivas/Qr_Lichen-Dreams/releases/download/v1.0.2/Lichen_Dreams_v1.0.2.apk",
     changelog: [
-      "Mejoras y correcciones generales",
-      "Mejoras de estabilidad de la aplicación"
+      "Mejoras y correcciones generales.",
+      "Mejoras de estabilidad de la aplicación."
     ]
   },
   {
@@ -64,11 +73,11 @@ const VERSIONS = [
     build: null,
     date: "2026-09-21",
     size: "71.7 MB",
-    sha256: "5f580acab87551d47642a10e8fc5f7f0edecf27eb32ae430b3d5a4bc3c258bec",
+    sha256: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     url: "https://github.com/HeidyVivas/Qr_Lichen-Dreams/releases/download/v1.0.1/Lichen_Dreams_v1.0.1.apk",
     changelog: [
-      "Mejoras y correcciones generales",
-      "Mejoras de estabilidad de la aplicación"
+      "Mejoras y correcciones generales.",
+      "Mejoras de estabilidad de la aplicación."
     ]
   },
   {
@@ -76,13 +85,14 @@ const VERSIONS = [
     build: null,
     date: "2026-09-21",
     size: "71.7 MB",
-    sha256: "11463a6953685a84fc903200cfcebc1bc1e09d4b30f0f4d354513db4ca5eb0c2",
+    sha256: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     url: "https://github.com/HeidyVivas/Qr_Lichen-Dreams/releases/download/v1.0.0/Lichen_Dreams_v1.0.0.apk",
     changelog: [
       "Primera versión de Lichen Dreams disponible para Android"
     ]
   }
 ];
+
 
 const VersionService = {
   async getVersions() { return VERSIONS; },
