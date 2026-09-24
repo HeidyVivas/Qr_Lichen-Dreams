@@ -44,7 +44,7 @@ jobs:
           git add docs/js/versions.js
           TAG="${{ github.event.release.tag_name || github.event.client_payload.tag || 'manual' }}"
           git commit -m "chore: sync versions from release $TAG"
-          git push
+          git push origin HEAD:main
 
       - name: Summary
         run: |
